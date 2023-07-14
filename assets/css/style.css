@@ -1,12 +1,74 @@
+/* Elements should be in dark mode by default */
+
+:root {
+    --text-light: rgb(255, 241, 232);
+    --text-dark: #3f3730;
+}
+
+@font-face {
+    font-family: "Hylia Serif";
+    src: url("../fonts/HyliaSerifBeta-Regular.otf");
+}
+
 html {
     min-height: 100%;
     display: flex;
     flex-direction: column;
 }
+
 body {
     flex-grow: 1;
 
-    background-image: url("../images/background.png");
+    background-image: url("../images/background-dark.png");
     background-repeat: repeat;
-    /* background-size: cover; */
+
+    color: var(--text-light);
+}
+
+body[data-color-mode="light"] {
+    background-image: url("../images/background-light.png");
+
+    color: var(--text-dark);
+}
+
+header {
+    display: flex;
+    justify-content: center;
+
+    padding: 20px;
+
+    font-family: "Hylia Serif", serif;
+    letter-spacing: 0.1rem;
+
+    background-image: url("../images/ouroboros-logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+h1 {
+    text-align: center;
+
+    font-size: 3rem;
+    font-weight: normal;
+}
+
+.color-mode-toggle {
+    width: 20px;
+    height: 20px;
+
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("../images/icons/light-mode-icon.png");
+
+    border: none;
+}
+
+.color-mode-toggle:hover {
+    cursor: pointer;
+}
+
+body[data-color-mode="light"] .color-mode-toggle {
+    background-image: url("../images/icons/dark-mode-icon.png");
 }
