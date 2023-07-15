@@ -11,13 +11,16 @@ class SeededRandom {
 let rand;
 
 function init() {
-    const noSeed = new URL(location.href).search === "";
-    if (noSeed) {
+    const url = new URL(location.href);
+    const params = new URLSearchParams(url.search);
+
+    if (params.get("seed") === null) {
         replaceNewSeed();
         return;
     }
 
-    rand = new SeededRandom("apples");
+    rand = new SeededRandom(params.get("seed"));
+    console.log("Rand Seed:", rand.getSeed());
     
     $(".color-mode-toggle").on("click", handleColorModeToggle); 
     fetchAndGenerateBoard(4);
@@ -33,10 +36,10 @@ function replaceNewSeed() {
 }
 
 
-async function fetchAndGenerateBoard(size) {
+async function fetchAndGenerateBoard(size=5) {
     const data = await fetchData();
-    console.log(data);
-    const entries = getRandomEntries(size*size, data);
+    const entries = getRandomEntries(size * size, data);
+    console.log(entries);
     generateBingoBoard(size, entries);
 }
 
@@ -47,34 +50,41 @@ function fetchData() {
         if (response.ok) return response.json();
         else console.error(response);
     })
-    .then(data => data.data);
+    .then(data => {
+        data = data.data;
+        data.sort((a, b) => a.id - b.id);  // sort by id, ASC
+        return data;
+    });
 }
 
+
+// returns num amount of unique, random entries from data
 function getRandomEntries(num, data) {
-    const entries = new Set([]);
-    let i = 0;
-    while (entries.size < num && i < 10) {
+    const entries = new Set();
+    while (entries.size < num) {
         const randEntry = data[rand.randInt(data.length)];
         entries.add(randEntry);
-        i++;
     }
-    console.log(entries);
     return [...entries];
 }
 
 
 function generateBingoBoard(size=5, entries) {
     $('.bingo-board').css('grid-template-columns', `repeat(${size}, ${100/size}%)`);
+    $('.bingo-board').css('grid-template-rows', `repeat(${size}, ${100/size}%)`);
     
     for (let i=0; i < size*size; i++) {
-        const boardItem = $('<div class="board-item align-center">');
+        const entry = entries[i];
+
+        const boardItem = $('<div class="board-item justify-center align-center">');
+        // boardItem.css('background-image', `url("${entry.image.slice(0,-10)}"), url("https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png")`)
+
         const itemText = $('<p>');
-        itemText.text(entries[i].name);
+        itemText.text(entry.name);
+
         boardItem.append(itemText);
         $('.bingo-board').append(boardItem);
     }
-
-    console.log('generated!');
 }
 
 

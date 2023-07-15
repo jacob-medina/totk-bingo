@@ -104,15 +104,17 @@ h1 {
 
     aspect-ratio: 1.5/1;
 
-    border: 2px solid var(--text-light);
+    border: 1px solid var(--text-light);
 }
 
 .board-item {
     padding: 10px;
 
-    border: 2px solid var(--text-light);
+    border: 1px solid var(--text-light);
 
     text-align: center;
+
+    background-size: cover;
 }
 
 body[data-color-mode="light"] :is(.bingo-board, .board-item) {
