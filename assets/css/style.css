@@ -1,14 +1,40 @@
 /* Elements should be in dark mode by default */
 
+@font-face {
+    font-family: "Hylia Serif";
+    src: url("../fonts/HyliaSerifBeta-Regular.otf");
+}
+
+@font-face {
+    font-family: "Calamity";
+    src: url("../fonts/Calamity-Regular.otf");
+
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Calamity";
+    src: url("../fonts/Calamity-Bold.otf");
+
+    font-weight: bold;
+}
+
 :root {
     --text-light: rgb(255, 241, 232);
     --text-dark: #3f3730;
 }
 
-@font-face {
-    font-family: "Hylia Serif";
-    src: url("../fonts/HyliaSerifBeta-Regular.otf");
+/* UTILITY CLASSES */
+.justify-center {
+    display: flex;
+    justify-content: center;
 }
+
+.align-center {
+    display: flex;
+    align-items: center;
+}
+
 
 html {
     min-height: 100%;
@@ -23,6 +49,8 @@ body {
     background-repeat: repeat;
 
     color: var(--text-light);
+
+    font-family: "Calamity", sans-serif;
 }
 
 body[data-color-mode="light"] {
@@ -35,7 +63,8 @@ header {
     display: flex;
     justify-content: center;
 
-    padding: 20px;
+    margin-bottom: 2rem;
+    padding: 2rem;
 
     font-family: "Hylia Serif", serif;
     letter-spacing: 0.1rem;
@@ -46,11 +75,48 @@ header {
     background-position: center;
 }
 
+body header hgroup > * {
+    margin: 0;
+    text-align: center;
+}
+
+.pretitle {
+    position: relative;
+    top: 0.5rem;
+}
+
 h1 {
     text-align: center;
 
     font-size: 3rem;
     font-weight: normal;
+}
+
+.wrapper {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.bingo-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: 50vh;
+
+    aspect-ratio: 1.5/1;
+
+    border: 2px solid var(--text-light);
+}
+
+.board-item {
+    padding: 10px;
+
+    border: 2px solid var(--text-light);
+
+    text-align: center;
+}
+
+body[data-color-mode="light"] :is(.bingo-board, .board-item) {
+    border-color: var(--text-dark);
 }
 
 .color-mode-toggle {
