@@ -41,6 +41,8 @@ async function fetchAndGenerateBoard(size=5) {
     const entries = getRandomEntries(size * size, data);
     console.log(entries);
     generateBingoBoard(size, entries);
+
+    endLoading();
 }
 
 
@@ -88,10 +90,26 @@ function generateBingoBoard(size=5, entries) {
 }
 
 
+function endLoading() {
+    $('.title-container').css('animation-name', 'loading-end');
+    $('.title').attr('data-loading', 'false');
+    showElement('main');
+}
+
+
 function handleColorModeToggle() {
     let colorMode = $('body').attr('data-color-mode');
     colorMode = (colorMode === "dark") ? "light" : "dark";
     $('body').attr('data-color-mode', colorMode);
+}
+
+
+function hideElement(element) {
+    $(element).addClass("hide");
+}
+
+function showElement(element) {
+    $(element).removeClass("hide");
 }
 
 
