@@ -32,6 +32,11 @@
     display: none !important;
 }
 
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
 .justify-center {
     display: flex;
     justify-content: center;
@@ -177,6 +182,7 @@ h1 {
 .bingo-board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    width: 100%;
     height: 50vh;
 
     aspect-ratio: 1.5/1;
@@ -196,6 +202,19 @@ h1 {
 
 body[data-color-mode="light"] :is(.bingo-board, .board-item) {
     border-color: var(--text-dark);
+}
+
+.board-item p {
+    margin: 0;
+}
+
+.board-item .challenge-text {
+    font-size: 75%;
+    margin-bottom: 0.2rem;
+}
+
+.item-text {
+    font-weight: bold;
 }
 
 .color-mode-toggle {

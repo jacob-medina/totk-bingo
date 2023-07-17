@@ -23,7 +23,7 @@ function init() {
     console.log("Rand Seed:", rand.getSeed());
     
     $(".color-mode-toggle").on("click", handleColorModeToggle); 
-    fetchAndGenerateBoard(4);
+    fetchAndGenerateBoard(5);
 }
 
 $(init());
@@ -78,15 +78,104 @@ function generateBingoBoard(size=5, entries) {
     for (let i=0; i < size*size; i++) {
         const entry = entries[i];
 
-        const boardItem = $('<div class="board-item justify-center align-center">');
-        // boardItem.css('background-image', `url("${entry.image.slice(0,-10)}"), url("https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png")`)
+        const boardItem = $('<div class="board-item flex-column justify-center align-center">');
 
-        const itemText = $('<p>');
-        itemText.text(entry.name);
+        const challengeText = $('<p class="challenge-text">');
+        const itemText = $('<p class="item-text">');
+        
+        const challenge = getChallenge(entry);
+        challengeText.text(challenge.challenge);
+        itemText.text(challenge.entry);
 
-        boardItem.append(itemText);
+        boardItem.append(challengeText, itemText);
         $('.bingo-board').append(boardItem);
     }
+}
+
+
+// returns challenge text appropriate to the type of entry
+function getChallenge({category, id, name}) {
+    // unique bosses
+    if ((id >= 191 && id <= 201) || id === 165) return {challenge: "defeat", entry: titleCase(name)};
+
+    // unique creatures
+    if (name === 'patricia') return {challenge: "feed", entry: titleCase(name)};
+    if (name === 'dondon') return {challenge: "feed a", entry: titleCase(name)};
+    if (id >= 2 && id <= 5) return {challenge: "ride a", entry: titleCase(name)};
+    if (id === 159) return {challenge: "defeat a", entry: titleCase(name)};  // training construct
+    if ((id >= 188 && id <= 190) || id === 202) return {challenge: "ride", entry: titleCase(name)};  // dragons
+
+    const uniqueEquipment = [
+        'sword of the hero', "biggoron's sword", "sea-breeze shield",
+        "fierce deity sword", 'scimitar of the seven', 'white sword of the sky',
+        'lightscale trident', 'sea-breeze boomerang', 'daybreaker', 'hylian shield',
+        'great eagle bow', 'boulder breaker'
+    ];
+    if (id === 329) return {challenge: "obtain the", entry: titleCase(name)};  // master sword
+    if (uniqueEquipment.includes(name)) return {challenge: "collect a", entry: titleCase(name)};
+    
+    let amount = 5; //rand.randInt(5) + 1;
+    name = getPlural(amount, simplifyName(name, id));
+    name = titleCase(romanNumeral(name)); 
+    if (amount === 1) amount = "a";
+
+    if (id === 504) return {challenge: `open ${amount}`, entry: titleCase(name)};  // treasure chest
+    if (id === 509) return {challenge: `discover ${amount}`, entry: titleCase(name)};  // wells
+    if (id >= 505 && id <= 508) return {challenge: `mine ${amount}`, entry: titleCase(name)};  // ore deposits
+    if (id === 72) return {challenge: `collect ${amount}`, entry: titleCase(name)};  // fairies
+    if (id === 1 || id === 6) return {challenge: `ride ${amount}`, entry: titleCase(name)};  // horses
+    if (id === 7) return {challenge: `find ${amount}`, entry: titleCase(name)};  // donkeys
+    if (id === 14 || id === 18 || id === 19) return {challenge: `feed ${amount}`, entry: titleCase(name)};  // white goats, hateno cows
+    if (id === 52) return {challenge: `hit ${amount}`, entry: titleCase(name)};  // white goats
+    
+    // normal materials & equipment
+    if (category === "materials" || category === "equipment") return {challenge: `collect ${amount}`, entry: name};
+
+    // normal creatures
+    if (category === "creatures") return {challenge: `hunt ${amount}`, entry: name};
+    
+    // normal monsters
+    if (category === "monsters") return {challenge: `kill ${amount}`, entry: name};
+
+    return {challenge: "", entry: name}
+}
+
+
+function simplifyName(name, id) {
+    const namesToSimplify = [
+        'duck', 'pigeon', 'sparrow', 'seagull', 'bear', 
+        'fox', 'coyote', 'cow', 'heron', 'squirrel', 'boar'
+    ];
+
+    if (id === 171) return "stone talus";
+
+    const words = name.split(" ");
+
+    if (words.some(word => namesToSimplify.includes(word))) {
+        return words.at(-1);
+    }
+
+    return name;
+}
+
+function getPlural(amount, name) {
+    const words = name.split(" ");
+    const pluralWordBefore = (word) => words.slice(0, words.indexOf(word) - 1).join(" ") + " " + words[words.indexOf(word) - 1] + "s " + words.slice(words.indexOf(word)).join(" ");
+
+    if (amount === 1) return name;
+
+    if (words.includes('moose') || words.at(-1) === "keese" || words.includes('carp')) return name;
+    if (name === "donkey") return name + "s";
+    if (words.includes('of')) return pluralWordBefore('of');
+    if (words.includes('(new)')) return pluralWordBefore('(new)');
+    if (words.includes('bass') || name.endsWith('ss') || name.endsWith('x')) return name + "es";
+    if (name.endsWith('s')) return name;
+    if (name.endsWith('y')) return name.slice(0, -1) + 'ies';
+    if (name.endsWith('h')) return name + "es";
+    if (name.endsWith('i') || name.endsWith(' iv')) return name + "'s";
+
+    if (amount > 1) return name + "s";
+    return name;
 }
 
 
@@ -101,6 +190,27 @@ function handleColorModeToggle() {
     let colorMode = $('body').attr('data-color-mode');
     colorMode = (colorMode === "dark") ? "light" : "dark";
     $('body').attr('data-color-mode', colorMode);
+}
+
+
+function romanNumeral(string) {
+    const romanNumerals = ['i', 'ii', 'iii', 'iv', 'v'];
+    const romanNumberalPlurals = romanNumerals.map(string => string += "'s");
+
+    let words = string.toLowerCase().split(" ");
+    words = words.map(word => {
+        if (romanNumerals.includes(word)) return word.toUpperCase();
+        if (romanNumberalPlurals.includes(word)) return word.toUpperCase().slice(0, -2) + "'s";
+        return word;
+    });
+
+    return words.join(" ");
+}
+
+function titleCase(string) {
+    let words = string.split(" ");
+    words = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+    return words.join(" ");
 }
 
 
