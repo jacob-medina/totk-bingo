@@ -1,0 +1,697 @@
+[
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Spotting Spot"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Village Attacked By Pirates"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Today's Menu"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Incomplete Stable"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "WANTED: Stone Talus"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "WANTED: Molduga"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "WANTED: Hinox"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Unknown Sky Giant"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Unknown Three-Headed Monster"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Unknown Huge Silhouette"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Horse Guard's Request"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Picture for Outskirt Stable"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Feathered Fugitives"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Picture for Riverside Stable"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Horse-Drawn Dreams"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Picture for New Serenne Stable"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Genli's Home Cooking"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Treasure Of The Secret Springs"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Molli The Fletcher's Quest"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Legacy Of The Rito"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Fish For Fletching"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Rito Rope Bridge"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Picture for Tabantha Bridge Stable"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Picture for Snowfield Stable"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Crossing the Cold Pool"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Open the Door"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Supply-Eyeing Fliers"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Blocked Cave"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Duchess Who Disappeared"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Kaneli's Flight Training"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Cave Mushrooms That Glow"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Captured Tent"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Who Finds the Haven?"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Whirly Swirly Things"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Secret Room"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Walton's Trasure Hunt"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Amber Dealer"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Ancient City Gorondia!"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Ancient City Gorondia?"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Soul Of The Gorons"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Moon-Gazing Gorons"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Hidden Treasure at Lizard Lakes"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Simmerstone Springs"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Cash In on Ripened Flint"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Meat For Meat"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Rock Roast or Dust"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Mine-Cart Land: Open For Business!"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Mine-Cart Land: Quickshot Course"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Mine-Cart Land: Death Mountain"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Picture for Woodland Stable"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Picture for Foothill Stable"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Fell into a Well!"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Abandoned Laborer"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Treasure Hunters"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Misko's Cave Of Chests"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Misko's Treasure: The Fierce Deity"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Misko's Treasure: Twins Manuscript"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Misko's Treasure of Aawakening I"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Misko's Treasure: Pirate Manuscript"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Misko's Treasure of Awakening II"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Misko's Treasure: Heroines Manuscript"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Misko's Treasure of Awakening III"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Tarrey Town Race is On!"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Secrets Within"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Master The Vehicle Prototype"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Home On Arrange"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Strongest In The World"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Gathering Pirates"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Picture for East Akkala Stable"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Eldin's Colossal Fossil"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Hebra's Colossal Fossil"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Gerudo's Colossal Fossil"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "One Hit Wonder! South"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Picture for South Akkala Stable"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "True Treasure"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Secret Treasure under the Great Fish"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Never-Ending Lecture"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Moonlit Princess"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Fort at Ja'Abu Ridge"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Glory Of The Zora"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Crabulous Deal"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Wife Wafted Away"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Token Of Friendship"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Picture for Wetland Stable"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "An Uninvited Guest"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Blue Stone"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Ultimate Dish?"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Mired In Muck"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Out of the Inn"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Follow The Cuccos"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Trip Through History"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Codgers' Quarrel"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Gloom-Borne Illness"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A New Champion's Tunic"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Teach Me A Lesson I"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Teach Me A Lesson Ii"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Dantz's Prize Cows"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Homegrown in Hateno"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Photographing a Chuchu"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Uma's Garden"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Manny's Beloved"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Lurelin Resort Project"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Dad's Blue Shirt"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Way to Trade, Washed Away"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Rattled Ralera"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Picture for Dueling Peaks Stable"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Bottled Cry for Help"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Seeking The Pirate Hideout"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Ousting The Giants"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Picture for Lakeside Stable"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Picture for Highland Stable"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Heroines' Secret"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Treasure Of The Gerudo Desert"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Pride of the Gerudo"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Dalia's Game"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Mysterious Eighth"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Missing Owner"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "To The Ruins!"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Decorate With Passion"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Lost In The Dunes"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Picture for the Closed Stable I"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "A Picture for the Closed Stable II"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Piaffe, Packed Away"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Gleeok Guts"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Disaster in Gerudo Canyon"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Great Tumbleweed Purge"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Heat-Endurance Contest!"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Cold-Endurance Contest!"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Iceless Icehouse"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Where Are The Wells?"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Ancient Blades Below"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The North Lomei Prophecy"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Lomei Labyrinth Island Prophecy"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The South Lomei Prophecy"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Goddess Statue Of Wisdom"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Goddess Statue Of Power"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "Goddess Statue Of Courage"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Mother Goddess Statue"
+	},
+	{
+		"id": -1,
+		"category": "side quests",
+		"name": "The Shrine Explorer"
+	}
+]

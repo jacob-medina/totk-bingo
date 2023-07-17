@@ -47,16 +47,28 @@ async function fetchAndGenerateBoard(size=5) {
 
 
 function fetchData() {
-    return fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/all?game=totk')
-    .then(response => {
-        if (response.ok) return response.json();
-        else console.error(response);
-    })
-    .then(data => {
-        data = data.data;
-        data.sort((a, b) => a.id - b.id);  // sort by id, ASC
-        return data;
-    });
+    const compendiumPromise = fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/all?game=totk')
+        .then(response => {
+            if (response.ok) return response.json();
+            else console.error(response);
+        })
+        .then(data => {
+            data = data.data;
+            data.sort((a, b) => a.id - b.id);  // sort by id, ASC
+            return data;
+        });
+
+    const sideQuestsPromise = fetch('./assets/data/side-quests.json')
+        .then(response => response.json());
+
+    const sideAdventuresPromise = fetch('./assets/data/side-adventures.json')
+        .then(response => response.json());
+    
+    const shrineQuestsPromise = fetch('./assets/data/shrine-quests.json')
+        .then(response => response.json());
+
+    return Promise.all([compendiumPromise, sideQuestsPromise, sideAdventuresPromise, shrineQuestsPromise])
+        .then(data => data.flat());
 }
 
 
@@ -94,14 +106,24 @@ function generateBingoBoard(size=5, entries) {
 
 
 // returns challenge text appropriate to the type of entry
-function getChallenge({category, id, name}) {
+function getChallenge({category, id, name, edible}) {
+    // normal side adventues
+    if (category === "side adventures") return {challenge: `side adventure:`, entry: name};
+
+    // normal side quests
+    if (category === "side quests") return {challenge: `side quest:`, entry: name};
+
+    // normal shrine quests
+    if (category === "shrine quests") return {challenge: `shrine quest:`, entry: name};
+
     // unique bosses
+    if (id === 200) return {challenge: "defeat", entry: titleCase("demon king ganondorf")};
     if ((id >= 191 && id <= 201) || id === 165) return {challenge: "defeat", entry: titleCase(name)};
 
     // unique creatures
     if (name === 'patricia') return {challenge: "feed", entry: titleCase(name)};
     if (name === 'dondon') return {challenge: "feed a", entry: titleCase(name)};
-    if (id >= 2 && id <= 5) return {challenge: "ride a", entry: titleCase(name)};
+    if (id >= 2 && id <= 5) return {challenge: "ride the", entry: titleCase(name)};  // unique horses
     if (id === 159) return {challenge: "defeat a", entry: titleCase(name)};  // training construct
     if ((id >= 188 && id <= 190) || id === 202) return {challenge: "ride", entry: titleCase(name)};  // dragons
 
@@ -109,15 +131,17 @@ function getChallenge({category, id, name}) {
         'sword of the hero', "biggoron's sword", "sea-breeze shield",
         "fierce deity sword", 'scimitar of the seven', 'white sword of the sky',
         'lightscale trident', 'sea-breeze boomerang', 'daybreaker', 'hylian shield',
-        'great eagle bow', 'boulder breaker'
+        'great eagle bow', 'boulder breaker', 'dusk bow', 'master sword'
     ];
-    if (id === 329) return {challenge: "obtain the", entry: titleCase(name)};  // master sword
-    if (uniqueEquipment.includes(name)) return {challenge: "collect a", entry: titleCase(name)};
+    // if (id === 329) return {challenge: "obtain the", entry: titleCase(name)};  // master sword
+    if (uniqueEquipment.includes(name)) return {challenge: "obtain the", entry: titleCase(name)};
     
-    let amount = 5; //rand.randInt(5) + 1;
+    let amount = rand.randInt(5) + 1;
     name = getPlural(amount, simplifyName(name, id));
-    name = titleCase(romanNumeral(name)); 
-    if (amount === 1) amount = "a";
+    name = titleCase(romanNumeral(name));
+
+    const vowels = ['a','e','i','o','u'];
+    if (amount === 1) amount = "a" + (vowels.includes(name.charAt(0).toLowerCase()) ? "n" : "");
 
     if (id === 504) return {challenge: `open ${amount}`, entry: titleCase(name)};  // treasure chest
     if (id === 509) return {challenge: `discover ${amount}`, entry: titleCase(name)};  // wells
@@ -125,13 +149,14 @@ function getChallenge({category, id, name}) {
     if (id === 72) return {challenge: `collect ${amount}`, entry: titleCase(name)};  // fairies
     if (id === 1 || id === 6) return {challenge: `ride ${amount}`, entry: titleCase(name)};  // horses
     if (id === 7) return {challenge: `find ${amount}`, entry: titleCase(name)};  // donkeys
-    if (id === 14 || id === 18 || id === 19) return {challenge: `feed ${amount}`, entry: titleCase(name)};  // white goats, hateno cows
+    if ([14,18,19,29].includes(id)) return {challenge: `feed ${amount}`, entry: titleCase(name)};  // white goats, hateno cows, hylian retriever
     if (id === 52) return {challenge: `hit ${amount}`, entry: titleCase(name)};  // white goats
     
     // normal materials & equipment
     if (category === "materials" || category === "equipment") return {challenge: `collect ${amount}`, entry: name};
 
     // normal creatures
+    if (category === "creatures" && edible === true) return {challenge: `collect ${amount}`, entry: name};
     if (category === "creatures") return {challenge: `hunt ${amount}`, entry: name};
     
     // normal monsters
@@ -143,14 +168,17 @@ function getChallenge({category, id, name}) {
 
 function simplifyName(name, id) {
     const namesToSimplify = [
-        'duck', 'pigeon', 'sparrow', 'seagull', 'bear', 
-        'fox', 'coyote', 'cow', 'heron', 'squirrel', 'boar'
+        'duck', 'pigeon', 'sparrow', 'seagull', 'bear', 'fox', 'buck',
+        'coyote', 'cow', 'heron', 'squirrel', 'boar', 'hawk', 'doe', 'crow'
     ];
 
-    if (id === 171) return "stone talus";
-
+    if (id === 171 || id === 170) return "stone talus";
+    if (id === 13) return "goat";
+    
     const words = name.split(" ");
-
+    
+    if (words.includes('wolf') || words.includes('coyote')) return 'wolf';
+    
     if (words.some(word => namesToSimplify.includes(word))) {
         return words.at(-1);
     }
@@ -166,6 +194,7 @@ function getPlural(amount, name) {
 
     if (words.includes('moose') || words.at(-1) === "keese" || words.includes('carp')) return name;
     if (name === "donkey") return name + "s";
+    if (name === "wolf") return 'wolves';
     if (words.includes('of')) return pluralWordBefore('of');
     if (words.includes('(new)')) return pluralWordBefore('(new)');
     if (words.includes('bass') || name.endsWith('ss') || name.endsWith('x')) return name + "es";

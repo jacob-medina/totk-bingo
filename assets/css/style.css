@@ -20,7 +20,7 @@
 }
 
 :root {
-    --text-light: rgb(255, 241, 232);
+    --text-light: rgb(240, 240, 210);
     --text-dark: #3f3730;
     --loading-spin-rotation: 0deg;
 }
@@ -133,6 +133,8 @@ header {
     background-repeat: no-repeat;
     background-position: center;
 
+    opacity: 50%;
+
     --loading-animation: loading-spin 6s linear infinite forwards;
 }
 
@@ -181,11 +183,9 @@ h1 {
 
 .bingo-board {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: 100%;
     height: 50vh;
 
-    aspect-ratio: 1.5/1;
+    /* aspect-ratio: 1.5/1; */
 
     border: 1px solid var(--text-light);
 }
