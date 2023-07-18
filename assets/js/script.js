@@ -22,6 +22,7 @@ function init() {
     rand = new SeededRandom(params.get("seed"));
     console.log("Rand Seed:", rand.getSeed());
     
+    $('.random-seed-btn').on('click', replaceNewSeed);
     $(".color-mode-toggle").on("click", handleColorModeToggle); 
     fetchAndGenerateBoard(5);
 }
@@ -32,7 +33,8 @@ $(init());
 // gives the site a new random seed
 function replaceNewSeed() {
     const seed = Math.random().toString().slice(2,8);
-    location.replace(location.href + `?seed=${seed}`);
+    const url = location.href.split('?')[0]
+    location.replace(url + `?seed=${seed}`);
 }
 
 
@@ -46,7 +48,9 @@ async function fetchAndGenerateBoard(size=5) {
 }
 
 
-function fetchData() {
+function fetchData(runningLocal=false) {
+    runningLocal = location.href.startsWith('file://');
+
     const compendiumPromise = fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/all?game=totk')
         .then(response => {
             if (response.ok) return response.json();
@@ -58,17 +62,27 @@ function fetchData() {
             return data;
         });
 
-    const sideQuestsPromise = fetch('./assets/data/side-quests.json')
-        .then(response => response.json());
+    if (!runningLocal) {
 
-    const sideAdventuresPromise = fetch('./assets/data/side-adventures.json')
+        const sideQuestsPromise = fetch('./assets/data/side-quests.json')
         .then(response => response.json());
-    
-    const shrineQuestsPromise = fetch('./assets/data/shrine-quests.json')
+        
+        const sideAdventuresPromise = fetch('./assets/data/side-adventures.json')
         .then(response => response.json());
-
-    return Promise.all([compendiumPromise, sideQuestsPromise, sideAdventuresPromise, shrineQuestsPromise])
+        
+        const shrineQuestsPromise = fetch('./assets/data/shrine-quests.json')
+        .then(response => response.json());
+        
+        const miscItemsPromise = fetch('./assets/data/misc-items.json')
+        .then(response => response.json());
+        
+        return Promise.all([compendiumPromise, sideQuestsPromise, sideAdventuresPromise, shrineQuestsPromise, miscItemsPromise])
         .then(data => data.flat());
+    }
+
+    else {
+        return compendiumPromise;
+    }
 }
 
 
@@ -120,6 +134,9 @@ function getChallenge({category, id, name, edible}) {
     if (id === 200) return {challenge: "defeat", entry: titleCase("demon king ganondorf")};
     if ((id >= 191 && id <= 201) || id === 165) return {challenge: "defeat", entry: titleCase(name)};
 
+    // unique misc items
+    if (name === 'autobuild') return {challenge: "obtain", entry: titleCase(name)};  // autobuild
+
     // unique creatures
     if (name === 'patricia') return {challenge: "feed", entry: titleCase(name)};
     if (name === 'dondon') return {challenge: "feed a", entry: titleCase(name)};
@@ -133,7 +150,7 @@ function getChallenge({category, id, name, edible}) {
         'lightscale trident', 'sea-breeze boomerang', 'daybreaker', 'hylian shield',
         'great eagle bow', 'boulder breaker', 'dusk bow', 'master sword'
     ];
-    // if (id === 329) return {challenge: "obtain the", entry: titleCase(name)};  // master sword
+
     if (uniqueEquipment.includes(name)) return {challenge: "obtain the", entry: titleCase(name)};
     
     let amount = rand.randInt(5) + 1;
@@ -144,14 +161,17 @@ function getChallenge({category, id, name, edible}) {
     if (amount === 1) amount = "a" + (vowels.includes(name.charAt(0).toLowerCase()) ? "n" : "");
 
     if (id === 504) return {challenge: `open ${amount}`, entry: titleCase(name)};  // treasure chest
-    if (id === 509) return {challenge: `discover ${amount}`, entry: titleCase(name)};  // wells
+    if (id === 509 || id === -11) return {challenge: `discover ${amount}`, entry: titleCase(name)};  // wells, caves
     if (id >= 505 && id <= 508) return {challenge: `mine ${amount}`, entry: titleCase(name)};  // ore deposits
     if (id === 72) return {challenge: `collect ${amount}`, entry: titleCase(name)};  // fairies
-    if (id === 1 || id === 6) return {challenge: `ride ${amount}`, entry: titleCase(name)};  // horses
+    if ([1, 6, 8].includes(id)) return {challenge: `ride ${amount}`, entry: titleCase(name)};  // horses, sand seals
     if (id === 7) return {challenge: `find ${amount}`, entry: titleCase(name)};  // donkeys
     if ([14,18,19,29].includes(id)) return {challenge: `feed ${amount}`, entry: titleCase(name)};  // white goats, hateno cows, hylian retriever
     if (id === 52) return {challenge: `hit ${amount}`, entry: titleCase(name)};  // white goats
-    
+    if ([-6, -8, -15].includes(id)) return {challenge: `collect ${amount}`, entry: titleCase(name)};  // sage's will, yiga schematic, korok seeds
+    if ([-10, -12, -14].includes(id)) return {challenge: `activate ${amount}`, entry: titleCase(name)};  // towers, cherry blossoms, nightroot
+    if (id === -7) return {challenge: `install ${amount}`, entry: titleCase(name)};  // Hudson signs
+
     // normal materials & equipment
     if (category === "materials" || category === "equipment") return {challenge: `collect ${amount}`, entry: name};
 

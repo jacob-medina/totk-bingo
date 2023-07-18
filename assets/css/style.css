@@ -133,7 +133,7 @@ header {
     background-repeat: no-repeat;
     background-position: center;
 
-    opacity: 50%;
+    opacity: 80%;
 
     --loading-animation: loading-spin 6s linear infinite forwards;
 }
@@ -183,9 +183,9 @@ h1 {
 
 .bingo-board {
     display: grid;
-    height: 50vh;
+    height: min(60vh, 60vw);
 
-    /* aspect-ratio: 1.5/1; */
+    aspect-ratio: 1.5/1;
 
     border: 1px solid var(--text-light);
 }
@@ -214,6 +214,7 @@ body[data-color-mode="light"] :is(.bingo-board, .board-item) {
 }
 
 .item-text {
+    font-size: 90%;
     font-weight: bold;
 }
 

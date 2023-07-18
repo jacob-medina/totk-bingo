@@ -1,0 +1,52 @@
+[
+    {
+        "id": -6,
+        "category": "misc-items",
+        "name": "sage's will"
+    },
+    {
+        "id": -7,
+        "category": "misc-items",
+        "name": "hudson sign"
+    },
+    {
+        "id": -8,
+        "category": "misc-items",
+        "name": "yiga schematic"
+    },
+    {
+        "id": -9,
+        "category": "misc-items",
+        "name": "autobuild"
+    },
+    {
+        "id": -10,
+        "category": "misc-items",
+        "name": "skyview tower"
+    },
+    {
+        "id": -11,
+        "category": "misc-items",
+        "name": "cave"
+    },
+    {
+        "id": -12,
+        "category": "misc-items",
+        "name": "cherry blossom tree"
+    },
+    {
+        "id": -13,
+        "category": "misc-items",
+        "name": "nightroot"
+    },
+    {
+        "id": -14,
+        "category": "misc-items",
+        "name": "shrine"
+    },
+    {
+        "id": -15,
+        "category": "misc-items",
+        "name": "korok seed"
+    }
+]
