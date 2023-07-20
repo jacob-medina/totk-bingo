@@ -8,26 +8,50 @@ class SeededRandom {
     }
 }
 
-class Matrix {
-    constructor(sizeX, sizeY=undefined) {
-        this.sizeX = sizeX;
-        this.sizeY = sizeY ?? sizeX;
-        this._matrix = Array(this.sizeX).fill("?").map(() => Array(this.sizeY).fill("?"));
+
+class MagicSquare {
+    constructor(size) {
+        this.size = Math.min(Math.max(size, 3), 5);
+        this._matrix = Array(this.size).fill("?").map(() => Array(this.size).fill("?"));
+
+        switch(this.size) {
+            case 3:
+                this.setMatrix([
+                    [8,1,6],
+                    [3,5,7],
+                    [4,9,2]]);
+                break;
+            
+            case 4:
+                this.setMatrix([
+                    [1,15,14,4],
+                    [10,11,8,5],
+                    [7,6,9,12],
+                    [16,2,3,13]]);
+                break;
+            
+            case 5:
+                this.setMatrix([
+                    [17,24,1,8,15],
+                    [23,5,7,14,16],
+                    [4,6,13,20,22],
+                    [10,12,19,21,3],
+                    [11,18,25,2,9]]);
+                break;
+        }
+
+        this.map(x => x - 1);
     }
 
     display() {
-        let output = ""
+        let output = "";
         for (const row of this._matrix) {
             for (const col of row) {
-                output += col + ' ';
+                output += col + ' ' + ((col >= 10) ? '' : " ");
             }
             output += '\n';
         }
         console.log(output);
-    }
-
-    insert(element, x, y) {
-        this._matrix[x][y] = element;
     }
 
     getElement(x, y) {
@@ -37,9 +61,96 @@ class Matrix {
     setMatrix(matrix) {
         this._matrix = matrix;
     }
+
+    map(func) {
+        const newMatrix = [];
+        for (const row of this._matrix) {
+            const newRow = [];
+            for (let col of row) {
+                newRow.push(func(col));
+            }
+            newMatrix.push(newRow);
+        }
+
+        this.setMatrix(newMatrix);
+    }
+
+    reflectX() {
+        for (const row of this._matrix) {
+            row.reverse();
+        }
+    }
+
+    reflectY() {
+        const swap = (rowA, rowB, matrix) => {
+            if (rowA < 0) rowA = matrix.length + rowA;
+            if (rowB < 0) rowB = matrix.length + rowB;
+
+            const rowATemp = matrix[rowA];
+            matrix[rowA] = matrix[rowB];
+            matrix[rowB] = rowATemp;
+            return matrix;
+        }
+
+        for (let i = 0; i < Math.floor(this._matrix.length / 2); i++) {
+            this.setMatrix(swap(i, -(i + 1), this._matrix));
+        }
+    }
+}
+
+class ChallengeType {
+    constructor(category, difficultyMin, difficultyMax, uniqueName=undefined, filterFunc=undefined, calcAmount=undefined) {
+        this.category = [category].flat();
+        this.diffMin = difficultyMin;
+        this.diffMax = difficultyMax;
+        
+        if (uniqueName) this.name = uniqueName;
+        else this.name = this.category[0];
+
+        if (filterFunc) this.filterFunc = filterFunc; 
+        if (calcAmount) this.calcAmount = calcAmount;
+    }
+
+    getEntries(data) {
+        // filter by category
+        let filteredData = [];
+        for (const cat of this.category) {
+            filteredData.push(data.filter(entry => entry.category === cat));
+        }
+        filteredData = filteredData.flat();
+
+        // filter data by filterFunc (if applicable)
+        if (this.filterFunc) return filteredData.filter(this.filterFunc);
+        else return filteredData;
+    }
 }
 
 let rand;
+const challengeTypes = [
+    // new ChallengeType('main quests', 24, 24),
+    new ChallengeType('side quests', 5, 8),
+    new ChallengeType('shrine quests', 8, 12),
+    new ChallengeType('side adventures', 12, 20),
+    new ChallengeType('armor sets', 18, 24),
+    new ChallengeType('autobuild', 19, 19),
+    new ChallengeType('creatures', 13, 13, 'patricia', entry => entry.name === 'patricia'),
+    new ChallengeType('monsters', 23, 23, 'bosses', entry => {
+        const id = entry.id;
+        const isBossOrGanondorf = (id >= 191 && id <= 201)
+        const isKohga = (id === 165);
+        return isBossOrGanondorf || isKohga;
+    }),
+    new ChallengeType(['monsters', 'creatures'], 9, 9, 'special horse/dragon/dondon', entry => {
+        const id = entry.id;
+        const name = entry.name;
+        const isSpecialHorse = (id >= 2 && id <= 5);
+        const isDragon = ((id >= 188 && id <= 190) || id === 202)
+        const isDondon = (name === 'dondon');
+        return isSpecialHorse || isDragon || isDondon;
+    }),
+
+];
+
 
 function init() {
     const url = new URL(location.href);
@@ -49,11 +160,6 @@ function init() {
         replaceNewSeed();
         return;
     }
-
-    matrix = new Matrix(4);
-    matrix.insert(3, 0, 1);
-    matrix.insert(5, 1, 2);
-    matrix.display();
 
     rand = new SeededRandom(params.get("seed"));
     console.log("Rand Seed:", rand.getSeed());
@@ -76,9 +182,14 @@ function replaceNewSeed() {
 
 async function fetchAndGenerateBoard(size=5) {
     const data = await fetchData();
+    magicSquare = new MagicSquare(size);
     const entries = getRandomEntries(size * size, data);
     console.log(entries);
     generateBingoBoard(size, entries);
+
+    for (const challengeType of challengeTypes) {
+        console.log(challengeType.name, challengeType.getEntries(data));
+    }
 
     endLoading();
 }
@@ -173,7 +284,7 @@ function getChallenge({category, id, name, edible}) {
     if (category === "shrine quests") return {challenge: `shrine quest:`, entry: name};
 
     // normal armor sets
-    if (category === "armor set") return {challenge: `obtain the`, entry: `${name} Set`};
+    if (category === "armor sets") return {challenge: `obtain the`, entry: `${name} Set`};
 
     // unique bosses
     if (id === 200) return {challenge: "defeat", entry: titleCase("demon king ganondorf")};
@@ -215,10 +326,11 @@ function getChallenge({category, id, name, edible}) {
     if ([1, 6, 8].includes(id)) return {challenge: `ride ${amount}`, entry: titleCase(name)};  // horses, sand seals
     if (id === 7) return {challenge: `find ${amount}`, entry: titleCase(name)};  // donkeys
     if ([14, 18, 19, 29].includes(id)) return {challenge: `feed ${amount}`, entry: titleCase(name)};  // white goats, hateno cows, hylian retriever
-    if (id === 52) return {challenge: `hit ${amount}`, entry: titleCase(name)};  // white goats
+    if (id === 52) return {challenge: `anger ${amount}`, entry: titleCase(name)};  // coocoos
     if ([-8, -10, -17].includes(id)) return {challenge: `collect ${amount}`, entry: titleCase(name)};  // sage's will, yiga schematic, korok seeds
     if ([-12, -14, -15].includes(id)) return {challenge: `activate ${amount}`, entry: titleCase(name)};  // towers, cherry blossoms, nightroot
     if (id === -9) return {challenge: `install ${amount}`, entry: titleCase(name)};  // Hudson signs
+    if (category === "shrines") return {challenge: `complete ${amount}`, entry: titleCase(name)};  // shrines
 
     // normal materials & equipment
     if (category === "materials" || category === "equipment") return {challenge: `collect ${amount}`, entry: name};
@@ -236,8 +348,8 @@ function getChallenge({category, id, name, edible}) {
 
 function simplifyName(name, id) {
     const namesToSimplify = [
-        'duck', 'pigeon', 'sparrow', 'seagull', 'bear', 'fox', 'buck',
-        'coyote', 'cow', 'heron', 'squirrel', 'boar', 'hawk', 'doe', 'crow'
+        'duck', 'pigeon', 'sparrow', 'seagull', 'bear', 'fox', 'buck', 'moose', 'sheep',
+        'coyote', 'cow', 'heron', 'squirrel', 'boar', 'hawk', 'doe', 'crow', 'buffalo'
     ];
 
     if (id === 171 || id === 170) return "stone talus";
@@ -246,6 +358,7 @@ function simplifyName(name, id) {
     const words = name.split(" ");
     
     if (words.includes('wolf') || words.includes('coyote')) return 'wolf';
+    if (words.includes('(new)')) return words.slice(0,-1).join(" ") + "✧";
     
     if (words.some(word => namesToSimplify.includes(word))) {
         return words.at(-1);
@@ -260,11 +373,11 @@ function getPlural(amount, name) {
 
     if (amount === 1) return name;
 
-    if (words.includes('moose') || words.at(-1) === "keese" || words.includes('carp') || words.includes('honey')) return name;
+    if (words.includes('moose') || words.includes('sheep') || words.at(-1) === "keese" || words.includes('carp') || words.includes('honey')) return name;
     if (name === "donkey") return name + "s";
     if (name === "wolf") return 'wolves';
     if (words.includes('of')) return pluralWordBefore('of');
-    if (words.includes('(new)')) return pluralWordBefore('(new)');
+    if (name.endsWith('✧')) return name.slice(0, -1) + "s✧";
     if (words.includes('bass') || name.endsWith('ss') || name.endsWith('x')) return name + "es";
     if (name.endsWith('s')) return name;
     if (name.endsWith('y')) return name.slice(0, -1) + 'ies';

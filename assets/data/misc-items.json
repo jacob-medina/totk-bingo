@@ -1,52 +1,52 @@
 [
     {
         "id": -8,
-        "category": "misc-items",
+        "category": "sage's wills",
         "name": "sage's will"
     },
     {
         "id": -9,
-        "category": "misc-items",
+        "category": "hudson signs",
         "name": "hudson sign"
     },
     {
         "id": -10,
-        "category": "misc-items",
+        "category": "yiga schematics",
         "name": "yiga schematic"
     },
     {
         "id": -11,
-        "category": "misc-items",
+        "category": "autobuild",
         "name": "autobuild"
     },
     {
         "id": -12,
-        "category": "misc-items",
+        "category": "towers",
         "name": "skyview tower"
     },
     {
         "id": -13,
-        "category": "misc-items",
+        "category": "caves",
         "name": "cave"
     },
     {
         "id": -14,
-        "category": "misc-items",
+        "category": "cherry blossom trees",
         "name": "cherry blossom tree"
     },
     {
         "id": -15,
-        "category": "misc-items",
+        "category": "nightroots",
         "name": "nightroot"
     },
     {
         "id": -16,
-        "category": "misc-items",
+        "category": "shrines",
         "name": "shrine"
     },
     {
         "id": -17,
-        "category": "misc-items",
+        "category": "korok seeds",
         "name": "korok seed"
     }
 ]
