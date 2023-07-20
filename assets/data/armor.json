@@ -821,13 +821,6 @@
 	{
 		"id": -5,
 		"category": "armor",
-		"name": "ancient hero's aspect",
-		"set": null,
-		"upgradable": true
-	},
-	{
-		"id": -5,
-		"category": "armor",
 		"name": "archaic legwear",
 		"set": null,
 		"upgradable": false

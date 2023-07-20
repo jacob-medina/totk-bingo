@@ -111,11 +111,14 @@ function fetchData() {
 
         const armorPromise = fetch('./assets/data/armor.json')
         .then(response => response.json());
+
+        const armorSetsPromise = fetch('./assets/data/armor-sets.json')
+        .then(response => response.json()); 
         
         const miscItemsPromise = fetch('./assets/data/misc-items.json')
         .then(response => response.json());
         
-        return Promise.all([compendiumPromise, sideQuestsPromise, sideAdventuresPromise, shrineQuestsPromise, armorPromise, miscItemsPromise])
+        return Promise.all([compendiumPromise, sideQuestsPromise, sideAdventuresPromise, shrineQuestsPromise, armorPromise, armorSetsPromise, miscItemsPromise])
         .then(data => data.flat());
     }
 
@@ -169,6 +172,9 @@ function getChallenge({category, id, name, edible}) {
     // normal shrine quests
     if (category === "shrine quests") return {challenge: `shrine quest:`, entry: name};
 
+    // normal armor sets
+    if (category === "armor set") return {challenge: `obtain the`, entry: `${name} Set`};
+
     // unique bosses
     if (id === 200) return {challenge: "defeat", entry: titleCase("demon king ganondorf")};
     if ((id >= 191 && id <= 201) || id === 165) return {challenge: "defeat", entry: titleCase(name)};
@@ -203,16 +209,16 @@ function getChallenge({category, id, name, edible}) {
     if (amount === 1) amount = "a" + (vowels.includes(name.charAt(0).toLowerCase()) ? "n" : "");
 
     if (id === 504) return {challenge: `open ${amount}`, entry: titleCase(name)};  // treasure chest
-    if (id === 509 || id === -11) return {challenge: `discover ${amount}`, entry: titleCase(name)};  // wells, caves
+    if (id === 509 || id === -13) return {challenge: `discover ${amount}`, entry: titleCase(name)};  // wells, caves
     if (id >= 505 && id <= 508) return {challenge: `mine ${amount}`, entry: titleCase(name)};  // ore deposits
     if (id === 72) return {challenge: `collect ${amount}`, entry: titleCase(name)};  // fairies
     if ([1, 6, 8].includes(id)) return {challenge: `ride ${amount}`, entry: titleCase(name)};  // horses, sand seals
     if (id === 7) return {challenge: `find ${amount}`, entry: titleCase(name)};  // donkeys
-    if ([14,18,19,29].includes(id)) return {challenge: `feed ${amount}`, entry: titleCase(name)};  // white goats, hateno cows, hylian retriever
+    if ([14, 18, 19, 29].includes(id)) return {challenge: `feed ${amount}`, entry: titleCase(name)};  // white goats, hateno cows, hylian retriever
     if (id === 52) return {challenge: `hit ${amount}`, entry: titleCase(name)};  // white goats
-    if ([-6, -8, -15].includes(id)) return {challenge: `collect ${amount}`, entry: titleCase(name)};  // sage's will, yiga schematic, korok seeds
-    if ([-10, -12, -14].includes(id)) return {challenge: `activate ${amount}`, entry: titleCase(name)};  // towers, cherry blossoms, nightroot
-    if (id === -7) return {challenge: `install ${amount}`, entry: titleCase(name)};  // Hudson signs
+    if ([-8, -10, -17].includes(id)) return {challenge: `collect ${amount}`, entry: titleCase(name)};  // sage's will, yiga schematic, korok seeds
+    if ([-12, -14, -15].includes(id)) return {challenge: `activate ${amount}`, entry: titleCase(name)};  // towers, cherry blossoms, nightroot
+    if (id === -9) return {challenge: `install ${amount}`, entry: titleCase(name)};  // Hudson signs
 
     // normal materials & equipment
     if (category === "materials" || category === "equipment") return {challenge: `collect ${amount}`, entry: name};

@@ -117,6 +117,7 @@ Zonaite,Zonaite Waistguard,TRUE
 Zora,Zora Armor,TRUE
 Zora,Zora Greaves,TRUE
 Zora,Zora Helm,TRUE
+null,Ancient Hero's Aspect,TRUE
 null,Archaic Legwear,FALSE
 null,Archaic Tunic,FALSE
 null,Archaic Warm Greaves,FALSE
@@ -134,16 +135,16 @@ null,Snow Boots,TRUE
 null,Tunic of Memories,TRUE
 null,Well-Worn Hair Band,FALSE
 null,Zant's Helmet,FALSE`;
-// null,Ancient Hero's Aspect,TRUE  (removed for quest length)
 
 data = data.split('\n');
-data = data.map(armor => {
+data = data.filter(armor => {
     let set, name, upgradable;
     [set, name, upgradable] = armor.split(',');
-    set = set === "null" ? null : set.toLowerCase();
-    name = name.toLowerCase();
-    upgradable = upgradable === "TRUE" ? true : false;
-    return {id: -5, category: "armor", name: name, set: set, upgradable: upgradable}
+    return set !== "null";
+}).map(armor => armor.split(',')[0]);
+data = [...new Set(data)];
+data = data.map(set => {
+    return {id: -6, category: "armor set", name: set}
 });
 console.log(data);
 

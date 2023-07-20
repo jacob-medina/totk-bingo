@@ -184,8 +184,8 @@ h1 {
 
 .bingo-board {
     display: grid;
-    /* height: min(60vh, 60vw); */
-    transform: scale(calc(100% / 640px));
+    height: min(60vh, 60vw);
+    /* transform: scale(calc(100% / 640px)); */
 
     aspect-ratio: 1.5/1;
 
