@@ -8,6 +8,37 @@ class SeededRandom {
     }
 }
 
+class Matrix {
+    constructor(sizeX, sizeY=undefined) {
+        this.sizeX = sizeX;
+        this.sizeY = sizeY ?? sizeX;
+        this._matrix = Array(this.sizeX).fill("?").map(() => Array(this.sizeY).fill("?"));
+    }
+
+    display() {
+        let output = ""
+        for (const row of this._matrix) {
+            for (const col of row) {
+                output += col + ' ';
+            }
+            output += '\n';
+        }
+        console.log(output);
+    }
+
+    insert(element, x, y) {
+        this._matrix[x][y] = element;
+    }
+
+    getElement(x, y) {
+        return this._matrix[x][y];
+    }
+
+    setMatrix(matrix) {
+        this._matrix = matrix;
+    }
+}
+
 let rand;
 
 function init() {
@@ -18,6 +49,11 @@ function init() {
         replaceNewSeed();
         return;
     }
+
+    matrix = new Matrix(4);
+    matrix.insert(3, 0, 1);
+    matrix.insert(5, 1, 2);
+    matrix.display();
 
     rand = new SeededRandom(params.get("seed"));
     console.log("Rand Seed:", rand.getSeed());
@@ -48,7 +84,7 @@ async function fetchAndGenerateBoard(size=5) {
 }
 
 
-function fetchData(runningLocal=false) {
+function fetchData() {
     runningLocal = location.href.startsWith('file://');
 
     const compendiumPromise = fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/all?game=totk')
@@ -72,11 +108,14 @@ function fetchData(runningLocal=false) {
         
         const shrineQuestsPromise = fetch('./assets/data/shrine-quests.json')
         .then(response => response.json());
+
+        const armorPromise = fetch('./assets/data/armor.json')
+        .then(response => response.json());
         
         const miscItemsPromise = fetch('./assets/data/misc-items.json')
         .then(response => response.json());
         
-        return Promise.all([compendiumPromise, sideQuestsPromise, sideAdventuresPromise, shrineQuestsPromise, miscItemsPromise])
+        return Promise.all([compendiumPromise, sideQuestsPromise, sideAdventuresPromise, shrineQuestsPromise, armorPromise, miscItemsPromise])
         .then(data => data.flat());
     }
 
@@ -153,6 +192,9 @@ function getChallenge({category, id, name, edible}) {
 
     if (uniqueEquipment.includes(name)) return {challenge: "obtain the", entry: titleCase(name)};
     
+    // armor
+    if (category === "armor") return {challenge: "obtain the", entry: titleCase(name)};
+    
     let amount = rand.randInt(5) + 1;
     name = getPlural(amount, simplifyName(name, id));
     name = titleCase(romanNumeral(name));
@@ -212,7 +254,7 @@ function getPlural(amount, name) {
 
     if (amount === 1) return name;
 
-    if (words.includes('moose') || words.at(-1) === "keese" || words.includes('carp')) return name;
+    if (words.includes('moose') || words.at(-1) === "keese" || words.includes('carp') || words.includes('honey')) return name;
     if (name === "donkey") return name + "s";
     if (name === "wolf") return 'wolves';
     if (words.includes('of')) return pluralWordBefore('of');

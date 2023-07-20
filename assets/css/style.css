@@ -56,6 +56,7 @@ html {
     flex-direction: column;
 
     margin: 0;
+    /* font-size: calc(12% + 8px); */
 }
 
 body {
@@ -183,7 +184,8 @@ h1 {
 
 .bingo-board {
     display: grid;
-    height: min(60vh, 60vw);
+    /* height: min(60vh, 60vw); */
+    transform: scale(calc(100% / 640px));
 
     aspect-ratio: 1.5/1;
 
@@ -211,11 +213,13 @@ body[data-color-mode="light"] :is(.bingo-board, .board-item) {
 .board-item .challenge-text {
     font-size: 75%;
     margin-bottom: 0.2rem;
+    font-weight: bold;
 }
 
 .item-text {
     font-size: 90%;
-    font-weight: bold;
+    line-height: 1.1rem;
+    /* font-weight: bold; */
 }
 
 .color-mode-toggle {
@@ -236,4 +240,11 @@ body[data-color-mode="light"] :is(.bingo-board, .board-item) {
 
 body[data-color-mode="light"] .color-mode-toggle {
     background-image: url("../images/icons/dark-mode-icon.png");
+}
+
+
+/* MEDIA QUERIES */
+
+@media screen and (min-width: 680px) {
+    
 }

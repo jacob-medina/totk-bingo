@@ -1,0 +1,947 @@
+[
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "mask of awakening",
+		"set": "awakening",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "trousers of awakening",
+		"set": "awakening",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "tunic of awakening",
+		"set": "awakening",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "barbarian armor",
+		"set": "barbarian",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "barbarian helm",
+		"set": "barbarian",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "barbarian leg wraps",
+		"set": "barbarian",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "charged headdress",
+		"set": "charged",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "charged shirt",
+		"set": "charged",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "charged trousers",
+		"set": "charged",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "climber's bandana",
+		"set": "climbing",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "climbing boots",
+		"set": "climbing",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "climbing gear",
+		"set": "climbing",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "dark hood",
+		"set": "dark",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "dark trousers",
+		"set": "dark",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "dark tunic",
+		"set": "dark",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "gaiters of the depths",
+		"set": "depths",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "hood of the depths",
+		"set": "depths",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "tunic of the depths",
+		"set": "depths",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "desert voe headband",
+		"set": "desert voe",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "desert voe spaulder",
+		"set": "desert voe",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "desert voe trousers",
+		"set": "desert voe",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "vah medoh divine helm",
+		"set": "divine",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "vah naboris divine helm",
+		"set": "divine",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "vah rudania divine helm",
+		"set": "divine",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "vah ruta divine helm",
+		"set": "divine",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "ember headdress",
+		"set": "ember",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "ember shirt",
+		"set": "ember",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "ember trousers",
+		"set": "ember",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "evil spirit armor",
+		"set": "evil spirit",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "evil spirit greaves",
+		"set": "evil spirit",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "evil spirit mask",
+		"set": "evil spirit",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "fierce deity armor",
+		"set": "fierce deity",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "fierce deity boots",
+		"set": "fierce deity",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "fierce deity mask",
+		"set": "fierce deity",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "flamebreaker armor",
+		"set": "flamebreaker",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "flamebreaker boots",
+		"set": "flamebreaker",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "flamebreaker helm",
+		"set": "flamebreaker",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "froggy hood",
+		"set": "froggy",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "froggy leggings",
+		"set": "froggy",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "froggy sleeve",
+		"set": "froggy",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "frostbite headdress",
+		"set": "frostbite",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "frostbite shirt",
+		"set": "frostbite",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "frostbite trousers",
+		"set": "frostbite",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "glide mask",
+		"set": "glide",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "glide shirt",
+		"set": "glide",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "glide tights",
+		"set": "glide",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "cap of the hero",
+		"set": "hero",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "trousers of the hero",
+		"set": "hero",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "tunic of the hero",
+		"set": "hero",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "hylian hood",
+		"set": "hylian",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "hylian trousers",
+		"set": "hylian",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "hylian tunic",
+		"set": "hylian",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "amber earrings",
+		"set": "jewelry",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "diamond circlet",
+		"set": "jewelry",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "opal earrings",
+		"set": "jewelry",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "ruby circlet",
+		"set": "jewelry",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "sapphire circlet",
+		"set": "jewelry",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "topaz earrings",
+		"set": "jewelry",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "miner's mask",
+		"set": "miner",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "miner's top",
+		"set": "miner",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "miner's trousers",
+		"set": "miner",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "bokoblin mask",
+		"set": "monster mask",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "horriblin mask",
+		"set": "monster mask",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "lizalfos mask",
+		"set": "monster mask",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "lynel mask",
+		"set": "monster mask",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "moblin mask",
+		"set": "monster mask",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "mystic headpiece",
+		"set": "mystic",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "mystic robe",
+		"set": "mystic",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "mystic trousers",
+		"set": "mystic",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "phantom armor",
+		"set": "phantom",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "phantom greaves",
+		"set": "phantom",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "phantom helm",
+		"set": "phantom",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "radiant mask",
+		"set": "radiant",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "radiant shirt",
+		"set": "radiant",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "radiant tights",
+		"set": "radiant",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "royal guard boots",
+		"set": "royal guard",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "royal guard cap",
+		"set": "royal guard",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "royal guard uniform",
+		"set": "royal guard",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "rubber armor",
+		"set": "rubber",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "rubber helm",
+		"set": "rubber",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "rubber tights",
+		"set": "rubber",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "cap of the sky",
+		"set": "sky",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "trousers of the sky",
+		"set": "sky",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "tunic of the sky",
+		"set": "sky",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "snowquill headdress",
+		"set": "snowquill",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "snowquill trousers",
+		"set": "snowquill",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "snowquill tunic",
+		"set": "snowquill",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "soldier's armor",
+		"set": "soldier",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "soldier's greaves",
+		"set": "soldier",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "soldier's helm",
+		"set": "soldier",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "stealth chest guard",
+		"set": "stealth",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "stealth mask",
+		"set": "stealth",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "stealth tights",
+		"set": "stealth",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "cap of time",
+		"set": "time",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "trousers of time",
+		"set": "time",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "tunic of time",
+		"set": "time",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "tingle's hood",
+		"set": "tingle",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "tingle's shirt",
+		"set": "tingle",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "tingle's tights",
+		"set": "tingle",
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "cap of twilight",
+		"set": "twilight",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "trousers of twilight",
+		"set": "twilight",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "tunic of twilight",
+		"set": "twilight",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "cap of the wild",
+		"set": "wild",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "trousers of the wild",
+		"set": "wild",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "tunic of the wild",
+		"set": "wild",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "cap of the wind",
+		"set": "wind",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "trousers of the wind",
+		"set": "wind",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "tunic of the wind",
+		"set": "wind",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "yiga armor",
+		"set": "yiga",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "yiga mask",
+		"set": "yiga",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "yiga tights",
+		"set": "yiga",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "zonaite helm",
+		"set": "zonaite",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "zonaite shin guards",
+		"set": "zonaite",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "zonaite waistguard",
+		"set": "zonaite",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "zora armor",
+		"set": "zora",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "zora greaves",
+		"set": "zora",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "zora helm",
+		"set": "zora",
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "ancient hero's aspect",
+		"set": null,
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "archaic legwear",
+		"set": null,
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "archaic tunic",
+		"set": null,
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "archaic warm greaves",
+		"set": null,
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "cece hat",
+		"set": null,
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "champion's leathers",
+		"set": null,
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "island lobster shirt",
+		"set": null,
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "korok mask",
+		"set": null,
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "lightning helm",
+		"set": null,
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "majora's mask",
+		"set": null,
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "midna's helmet",
+		"set": null,
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "ravio's hood",
+		"set": null,
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "sand boots",
+		"set": null,
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "shiek's mask",
+		"set": null,
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "snow boots",
+		"set": null,
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "tunic of memories",
+		"set": null,
+		"upgradable": true
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "well-worn hair band",
+		"set": null,
+		"upgradable": false
+	},
+	{
+		"id": -5,
+		"category": "armor",
+		"name": "zant's helmet",
+		"set": null,
+		"upgradable": false
+	}
+]
