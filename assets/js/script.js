@@ -242,9 +242,11 @@ function init() {
     }
 
     rand = new SeededRandom(params.get("seed"));
-    console.log("Rand Seed:", rand.getSeed());
+    // console.log("Rand Seed:", rand.getSeed());
     
     $('.random-seed-btn').on('click', replaceNewSeed);
+    $('.show-stats-btn').on('click', showBoardStats);
+    $('.hide-stats-btn').on('click', hideBoardStats);
     $(".color-mode-toggle").on("click", handleColorModeToggle); 
     fetchAndGenerateBoard(5);
 }
@@ -260,30 +262,61 @@ function replaceNewSeed() {
 }
 
 
+// hides the stats for each board item
+function hideBoardStats() {
+    $('.item-stats').remove();
+    hideElement('.hide-stats-btn');
+    showElement('.show-stats-btn');
+}
+
+
+// shows the stats for each board item
+function showBoardStats() {
+    $('.item-stats').remove();  // clear any previous stats
+
+    $('.board-item').each(function() {
+        const boardItem = $(this);
+        const entry = boardItem.data('entry');
+
+        const stats = $('<div class="item-stats">')
+                
+        stats.append(`<p> diff: ${entry.difficulty} </p>`);
+        stats.append(`<p> amount: ${entry.amount} </p>`);
+
+        boardItem.append(stats);
+    });
+
+    for (const challengeType of challengeTypes) {
+        console.log(challengeType.name, challengeType.getEntries());
+    }
+
+    hideElement('.show-stats-btn');
+    showElement('.hide-stats-btn');
+}
+
+
 async function fetchAndGenerateBoard(size=5) {
     const data = await fetchData();
     magicSquare = new MagicSquare(size);
-    const entries = []; //getRandomEntries(size * size, data);
+    const entries = [];
+
+    // get all entries for challenge types
+    challengeTypes.forEach(type => type.getEntries(data));
     
-    for (const challengeType of challengeTypes) {
-        console.log(challengeType.name, challengeType.getEntries(data));
-    }
-    
+    // choose a random entry for each difficulty
     for (const difficulty of magicSquare._matrix.flat()) {
         const validChallengeTypes = challengeTypes.filter(challengeType => (difficulty >= challengeType.diffMin && difficulty <= challengeType.diffMax));
         const randChallengeType = validChallengeTypes[rand.randInt(validChallengeTypes.length)];
+        
+        // TODO: get unique entries
         let randEntry = randChallengeType.getRandomEntry(rand);
         randEntry = structuredClone(randEntry);
         randEntry.challengeType = randChallengeType.name;
         randEntry.difficulty = difficulty;
         randEntry.amount = randChallengeType.calcAmount(difficulty);
-        console.log(randEntry);
-        // TODO: get unique entries
+        
         entries.push(randEntry);
-        // console.log('Difficulty:', difficulty, );
     }
-
-    console.log(entries);
 
     generateBingoBoard(size, entries);
     
@@ -356,9 +389,11 @@ function generateBingoBoard(size=5, entries) {
         const entry = entries[i];
 
         const boardItem = $('<div class="board-item flex-column justify-center align-center">');
+        boardItem.data('entry', entry);
 
         const challengeText = $('<p class="challenge-text">');
         const itemText = $('<p class="item-text">');
+        const stats = $('<div class="item-stats">')
         const difficultyText = $('<p class="item-text">');
         
         const challenge = getChallenge(entry);
@@ -366,6 +401,7 @@ function generateBingoBoard(size=5, entries) {
         itemText.text(challenge.entry);
         difficultyText.text(entry.difficulty);
 
+        stats.append(difficultyText);
         boardItem.append(challengeText, itemText);
         $('.bingo-board').append(boardItem);
     }

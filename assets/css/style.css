@@ -20,8 +20,9 @@
 }
 
 :root {
-    --text-light: rgb(240, 240, 210);
+    --text-light: #f0f0d2;
     --text-dark: #3f3730;
+    --debug: #87f8fd;
     --loading-spin-rotation: 0deg;
 }
 
@@ -194,6 +195,7 @@ h1 {
 
 .board-item {
     padding: 10px;
+    position: relative;
 
     border: 1px solid var(--text-light);
 
@@ -220,6 +222,18 @@ body[data-color-mode="light"] :is(.bingo-board, .board-item) {
     font-size: 90%;
     line-height: 1.1rem;
     /* font-weight: bold; */
+}
+
+.item-stats {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.item-stats p {
+    font-size: 50%;
+    color: var(--debug);
+    text-align: start;
 }
 
 .color-mode-toggle {
