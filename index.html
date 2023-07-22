@@ -6,11 +6,18 @@
     <title>TotK Bingo</title>
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
 
+    <!-- Google Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
     <!-- My Styles -->
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body data-color-mode="dark">
+    <button class="color-mode-toggle icon-btn">
+        <span class="material-symbols-outlined">light_mode</span>
+    </button>
+
     <header>
         <div style="position: relative">
             <div class="title-container">
@@ -28,12 +35,27 @@
         </div>
     </main>
 
-    <footer>
-        <button class="color-mode-toggle"></button>
-        <button class="random-seed-btn">Random Seed</button>
-        <button class="show-stats-btn">Show Stats</button>
-        <button class="hide-stats-btn hide">Hide Stats</button>
+    <footer class="hide">
+        <form class="seed-form align-center justify-center">
+            <button class="random-seed-btn icon-btn">
+                <span class="material-symbols-outlined">casino</span>
+            </button>
+
+            <input type="text" placeholder="Enter a seed" name="seed" id="seed-input" autocomplete="off">
+            
+            <button type="submit" class="icon-btn">
+                <span class="material-symbols-outlined">arrow_circle_right</span>
+            </button>
+        </form>
     </footer>
+
+    <div class="debug">
+        <button class="show-stats-btn icon-btn">
+            <span class="material-symbols-outlined">bug_report</span>
+        </button>
+        
+        <button class="hide-stats-btn icon-btn hide">Hide Stats</button>
+    </div>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>

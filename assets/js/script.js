@@ -175,6 +175,7 @@ const uniqueEquipment = [
     'great eagle bow', 'boulder breaker', 'dusk bow', 'master sword'
 ];
 
+const challTypeWeightReduce = 0.5;  // factor by which challenge type weights are reduced each time they are chosen
 const challengeTypes = [
     // challenges with 1 item
     new ChallengeType('main quests', 23, 24, 3),
@@ -239,7 +240,7 @@ const challengeTypes = [
             return isMiniBoss || isSilver;
         },
         difficulty => clamp(Math.ceil(difficulty / 5), 1, 3)),
-    new ChallengeType('monsters', 0, 16, 1, undefined,
+    new ChallengeType('monsters', 0, 16, 1.5, undefined,
         entry => {
             const {id, name} = entry;
             const words = name.split(" ");
@@ -256,7 +257,7 @@ const challengeTypes = [
     new ChallengeType('equipment', 10, 18, 1, 'equipment ✧',
         entry => entry.name.endsWith('(new)'),
         difficulty => Math.max(Math.ceil(difficulty / 4), 1)),
-    new ChallengeType('materials', 0, 10, 1, undefined, undefined,
+    new ChallengeType('materials', 0, 10, 1.5, undefined, undefined,
         difficulty => Math.max(Math.ceil(1.3 * difficulty), 1))
 ];
 
@@ -273,9 +274,11 @@ function init() {
     }
 
     rand = new SeededRandom(params.get("seed"));
-    // console.log("Rand Seed:", rand.getSeed());
     
-    $('.random-seed-btn').on('click', replaceNewSeed);
+    setColorMode(getColorMode());
+
+    $('.random-seed-btn').on('click', handleRandomSeedBtn);
+    $('.seed-form').on('submit', handleSeedFormSubmit);
     $('.show-stats-btn').on('click', showBoardStats);
     $('.hide-stats-btn').on('click', hideBoardStats);
     $(".color-mode-toggle").on("click", handleColorModeToggle); 
@@ -285,11 +288,25 @@ function init() {
 $(init());
 
 
-// gives the site a new random seed
-function replaceNewSeed() {
-    const seed = Math.random().toString().slice(2,8);
+function handleRandomSeedBtn() {
+    const randSeed = Math.random().toString().slice(2,8);
+    $('#seed-input').val(randSeed);
+    replaceNewSeed(randSeed);
+}
+
+// gives the site a new seed from input, or a random one instead
+function replaceNewSeed(seed=undefined) {
+    seed = seed ?? Math.random().toString().slice(2,8);
     const url = location.href.split('?')[0]
     location.replace(url + `?seed=${seed}`);
+}
+
+
+function handleSeedFormSubmit(event) {
+    event.preventDefault();
+    const seed = $('#seed-input').val();
+    console.log(seed);
+    replaceNewSeed(seed);
 }
 
 
@@ -342,7 +359,7 @@ async function fetchAndGenerateBoard(size=5) {
             return isBetween(difficulty, challengeType.diffMin, challengeType.diffMax);
         });
         const randChallengeType = getWeightedRandom(validChallengeTypes, rand);
-        randChallengeType.weight = Math.round(randChallengeType.weight * 0.8 * 100) / 100;  // reduce change to get same challenge type again
+        randChallengeType.weight = Math.round(randChallengeType.weight * challTypeWeightReduce * 100) / 100;  // reduce change to get same challenge type again
         console.log(`${randChallengeType.name} weight:`, randChallengeType.weight);
         
         // TODO: get unique entries
@@ -569,14 +586,27 @@ function getPlural(amount, name) {
 function endLoading() {
     $('.title-container').css('animation-name', 'loading-end');
     $('.title').attr('data-loading', 'false');
+    
     showElement('main');
+    showElement('footer');
+}
+
+
+function getColorMode() {
+    return localStorage.getItem('color-mode') ?? $('body').attr('data-color-mode');
+}
+
+function setColorMode(colorMode) {
+    $('body').attr('data-color-mode', colorMode);
+    localStorage.setItem('color-mode', colorMode);
 }
 
 
 function handleColorModeToggle() {
-    let colorMode = $('body').attr('data-color-mode');
+    let colorMode = getColorMode();
+    $('.color-mode-toggle .material-symbols-outlined').text(colorMode + '_mode');  // set colorMode toggle icon
     colorMode = (colorMode === "dark") ? "light" : "dark";
-    $('body').attr('data-color-mode', colorMode);
+    setColorMode(colorMode);
 }
 
 

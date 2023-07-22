@@ -91,6 +91,31 @@ header {
     letter-spacing: 0.1rem;
 }
 
+button {
+    background-color: transparent;
+    border: none;
+    color: var(--text-light);
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+body[data-color-mode="light"] button {
+    color: var(--text-dark);
+}
+
+.icon-btn {
+    width: 1.5rem;
+    height: 1.5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* MAIN CONTENT */
+
 .title-container {
     position: absolute;
     top: 35vh;
@@ -237,23 +262,41 @@ body[data-color-mode="light"] :is(.bingo-board, .board-item) {
 }
 
 .color-mode-toggle {
-    width: 20px;
-    height: 20px;
+    width: 2rem;
+    height: 2rem;
 
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-image: url("../images/icons/light-mode-icon.png");
+    position: absolute;
+    top: 10px;
+    right: 10px;
 
     border: none;
 }
 
-.color-mode-toggle:hover {
-    cursor: pointer;
+.seed-form input[type="text"] {
+    padding: 0.5rem;
+
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid var(--text-light);
+    
+    color: var(--text-light);
+    font-family: "Calamity", sans-serif;
 }
 
-body[data-color-mode="light"] .color-mode-toggle {
-    background-image: url("../images/icons/dark-mode-icon.png");
+::placeholder {
+    color: var(--text-light);
+}
+
+body[data-color-mode="light"] .seed-form input[type="text"],
+body[data-color-mode="light"] ::placeholder {
+    color: var(--text-dark);
+    border-color: var(--text-dark);
+}
+
+.debug {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
 }
 
 
