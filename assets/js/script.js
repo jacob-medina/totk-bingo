@@ -252,8 +252,13 @@ const challengeTypes = [
         },
         difficulty => Math.max(difficulty, 1)),
     new ChallengeType('equipment', 2, 16, 1, undefined,
-        entry => !uniqueEquipment.includes(entry), 
-        difficulty => Math.max(Math.floor(difficulty / 1.3), 1)),
+        entry => {
+            const { name } = entry;
+            const isUnique = uniqueEquipment.includes(name);
+            const isNew = name.endsWith('(new)');
+            return !isUnique && !isNew;
+        },
+        difficulty => Math.max(Math.floor(difficulty / 1.5), 1)),
     new ChallengeType('equipment', 10, 18, 1, 'equipment ✧',
         entry => entry.name.endsWith('(new)'),
         difficulty => Math.max(Math.ceil(difficulty / 4), 1)),
@@ -267,26 +272,42 @@ const weightChallengeTypes = challengeTypes.map(ct => new WeightedValue(ct, ct.w
 function init() {
     const url = new URL(location.href);
     const params = new URLSearchParams(url.search);
+    const seed = params.get("seed");
 
-    if (params.get("seed") === null) {
+    if (seed === null) {
         replaceNewSeed();
         return;
     }
 
-    rand = new SeededRandom(params.get("seed"));
+    rand = new SeededRandom(seed);
     
     setColorMode(getColorMode());
+    $('.seed').val(seed);
 
-    $('.random-seed-btn').on('click', handleRandomSeedBtn);
-    $('.seed-form').on('submit', handleSeedFormSubmit);
+    $('.bingo-board').on('click', '.board-item', handleBoardClick);
+
+    // options
+    $('.options-form').on('submit', handleOptionsFormSubmit);
+    $('.random-seed-btn').on('click', replaceNewSeed);
+    $('#board-size-range').on('input', setBoardSize);
+    $('#difficulty-range').on('input', setDifficulty);
+
+    $(".color-mode-toggle").on("click", handleColorModeToggle); 
+
+    // debug
     $('.show-stats-btn').on('click', showBoardStats);
     $('.hide-stats-btn').on('click', hideBoardStats);
-    $(".color-mode-toggle").on("click", handleColorModeToggle); 
+
     fetchAndGenerateBoard(5);
 }
 
 $(init());
 
+
+function handleBoardClick() {
+    const boardItem = $(this);
+    boardItem.addClass('done');
+}
 
 function handleRandomSeedBtn() {
     const randSeed = Math.random().toString().slice(2,8);
@@ -298,15 +319,34 @@ function handleRandomSeedBtn() {
 function replaceNewSeed(seed=undefined) {
     seed = seed ?? Math.random().toString().slice(2,8);
     const url = location.href.split('?')[0]
-    location.replace(url + `?seed=${seed}`);
+    location.assign(url + `?seed=${seed}`);
 }
 
 
-function handleSeedFormSubmit(event) {
+function handleOptionsFormSubmit(event) {
     event.preventDefault();
-    const seed = $('#seed-input').val();
-    console.log(seed);
+
+    let seed = $('#seed-input').val();
+
+    if (seed === "") {
+        handleRandomSeedBtn();
+        return;
+    }
+
     replaceNewSeed(seed);
+}
+
+
+function setBoardSize() {
+    const boardSize = $('#board-size-range').val();
+    const text = boardSize + 'x' + boardSize;
+    $('.board-size').text(text);
+}
+
+
+function setDifficulty() {
+    const difficulty = parseFloat($('#difficulty-range').val()).toFixed(1);
+    $('.difficulty').text(difficulty);
 }
 
 
