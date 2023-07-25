@@ -298,6 +298,7 @@ function init() {
     $('.show-stats-btn').on('click', showBoardStats);
     $('.hide-stats-btn').on('click', hideBoardStats);
 
+    generateChallengeOptions();
     fetchAndGenerateBoard(5);
 }
 
@@ -380,6 +381,23 @@ function showBoardStats() {
 
     hideElement('.show-stats-btn');
     showElement('.hide-stats-btn');
+}
+
+
+function generateChallengeOptions() {
+    const optionsContainer = $('.challenge-options');
+    let html = "";
+
+    for (const challengeType of challengeTypes.sort((a, b) => b.diffMax - a.diffMax)) {
+        const dashedName = challengeType.name.split(" ").join('-');
+        html +=
+`<div>
+    <input type="checkbox" id="${dashedName}-option" name="${dashedName}" checked>
+    <label for="${dashedName}-option">${titleCase(challengeType.name)}</label>
+</div>`;
+        html += "\n";
+}
+    optionsContainer.append(html);
 }
 
 

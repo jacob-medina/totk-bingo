@@ -138,9 +138,30 @@ body[data-color-mode="light"] button {
     border-left: 1px solid var(--text-light) !important;
 }
 
-.options-section {
-    width: 50%;
+.offcanvas-header {
+    padding-bottom: 0;
+}
 
+.offcanvas-body {
+    overflow-y: scroll;
+}
+
+.options-header {
+    padding-top: 2.25rem;
+    padding-bottom: 1rem;
+}
+
+.options-header:nth-child(1) {
+    padding-top: 0;
+}
+
+.offcanvas :is(h1, h2, h3, h4, h5, h6) {
+    font-family: "Hylia Serif", serif;
+    letter-spacing: 0.08rem;
+}
+
+.options-section {
+    width: 90%;
     margin-left: 1rem;
 }
 
@@ -169,11 +190,18 @@ body[data-color-mode="light"] ::placeholder {
     border-color: var(--text-dark);
 }
 
-.random-seed-btn {
+.text-icon-btn {
     gap: 1rem;
+}
 
+.outlined-btn {
     border: 1px solid var(--text-light);
     border-radius: 2px;
+}
+
+input[type=range] {
+    position: relative;
+    bottom: 0.6rem;
 }
 
 input[type=range]::-webkit-slider-thumb {
@@ -197,7 +225,27 @@ input[type=range]::-webkit-slider-runnable-track {
     border-radius: 0px;
     border: none;
     margin-top: 1rem;
-  }
+}
+
+legend {
+    font-size: 1rem;
+}
+
+.challenge-options {
+    margin-left: 1rem;
+}
+
+.options-fixed-footer {
+    width: 100%;
+
+    position: fixed;
+    bottom: 0;
+
+    padding: 1rem;
+    padding-top: 1rem;
+
+    background: linear-gradient(transparent, 20%, black);
+}
 
 /* MAIN CONTENT */
 

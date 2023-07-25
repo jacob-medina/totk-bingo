@@ -32,6 +32,10 @@
                 <span class="material-symbols-outlined">tune</span>
             </button>
     
+            <button class="share-btn icon-btn">
+                <span class="material-symbols-outlined">share</span>
+            </button>
+
             <button class="color-mode-toggle icon-btn">
                 <span class="material-symbols-outlined">light_mode</span>
             </button>
@@ -60,8 +64,10 @@
                             <span class="material-symbols-outlined">arrow_circle_right</span>
                         </button>
                     </div>
+
+                    <br/>
     
-                    <button class="random-seed-btn justify-start align-center">
+                    <button class="random-seed-btn text-icon-btn outlined-btn justify-start align-center">
                         <span>Random Seed</span>
                         <span class="material-symbols-outlined">casino</span>
                     </button>
@@ -69,19 +75,38 @@
 
                 <!-- Parameters Section -->
                 <h5 class="options-header">Parameters</h5>
-                <div class="options-section">
-                    <div class="flex-column justify-start align-start">
-                        <label for="board-size-range">Board size: <span class="board-size">5x5</span></label>
-                        <input type="range" class="form-range" min="3" max="5" step="1" value="5" id="board-size-range">
+                <div class="options-section container-fluid">
+                    <div class="row">
+                        <div class="flex-column justify-start align-start col-8">
+                            <label for="board-size-range">Board size: <span class="board-size">5x5</span></label>
+                            <input type="range" class="form-range" min="3" max="5" step="1" value="5" id="board-size-range">
+                        </div>
                     </div>
-
+                    <br/>
+                    <div class="row">
+                        <div class="flex-column justify-start align-start col-8">
+                            <label for="difficulty-range">Challenge Difficulty: <span class="difficulty">1.0</span></label>
+                            <input type="range" class="form-range" min="0.2" max="2.0" step="0.2" value="1.0" id="difficulty-range">
+                        </div>
+                    </div>
+                    <br/>
                     <div class="flex-column justify-start align-start">
-                        <label for="difficulty-range">Challenge Difficulty: <span class="difficulty">1.0</span></label>
-                        <input type="range" class="form-range" min="0.2" max="2.0" step="0.2" value="1.0" id="difficulty-range">
+                        <fieldset>
+                            <legend>Include...</legend>
+                            <div class="challenge-options"></div>
+                        </fieldset>
                     </div>
                 </div>
+                <br/>
+                <br/>
             </form>
           </div>
+          <div class="options-fixed-footer">
+            <button class="outlined-btn text-icon-btn build-btn justify-start align-center">
+                <span>Build Board</span>
+                <span class="material-symbols-outlined">build</span>
+            </button>
+        </div>
         </div>
     </div>
 
