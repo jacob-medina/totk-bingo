@@ -3,9 +3,39 @@ class SeededRandom {
         this._seed = seed;
         this.getSeed = () => this._seed;
         this.setSeed = (newSeed) => {this._seed = newSeed;};
-        this.rand = mulberry32(cyrb128(this.getSeed()));
+        this.rand = this.mulberry32(this.cyrb128(this.getSeed()));
         this.randInt = (max) => Math.floor(this.rand() * max);
     }
+
+    // START OF code from bryc @ https://stackoverflow.com/a/47593316
+    // hashing function
+    cyrb128(str) {
+        let h1 = 1779033703, h2 = 3144134277,
+            h3 = 1013904242, h4 = 2773480762;
+        for (let i = 0, k; i < str.length; i++) {
+            k = str.charCodeAt(i);
+            h1 = h2 ^ Math.imul(h1 ^ k, 597399067);
+            h2 = h3 ^ Math.imul(h2 ^ k, 2869860233);
+            h3 = h4 ^ Math.imul(h3 ^ k, 951274213);
+            h4 = h1 ^ Math.imul(h4 ^ k, 2716044179);
+        }
+        h1 = Math.imul(h3 ^ (h1 >>> 18), 597399067);
+        h2 = Math.imul(h4 ^ (h2 >>> 22), 2869860233);
+        h3 = Math.imul(h1 ^ (h3 >>> 17), 951274213);
+        h4 = Math.imul(h2 ^ (h4 >>> 19), 2716044179);
+        return (h1^h2^h3^h4)>>>0;
+    }
+
+    // random number generator
+    mulberry32(a) {
+        return function() {
+          var t = a += 0x6D2B79F5;
+          t = Math.imul(t ^ t >>> 15, t | 1);
+          t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+          return ((t ^ t >>> 14) >>> 0) / 4294967296;
+        }
+    }
+    // END OF code from bryc @ https://stackoverflow.com/a/47593316
 }
 
 
@@ -140,42 +170,6 @@ class ChallengeType {
 }
 
 
-class WeightedValue {
-    constructor(value, weight=1) {
-        this.value = value;
-        this.weight = weight;
-    }
-}
-
-
-// returns a random value from an array of WeightedValues
-// larger weights have a higher chance of being chosen
-function getWeightedRandom(weightValues, seededRandom) {
-    let weightSum = 0;
-    const weightedArray = weightValues.map(wv => {
-        weightSum += wv.weight;
-
-        return {
-            value: wv.value,
-            max: weightSum
-        };
-    });
-
-    const randNum = seededRandom.rand() * weightSum;
-    const value = weightedArray.find(wv => randNum < wv.max);
-    return value.value;
-}
-
-let rand;
-
-const uniqueEquipment = [
-    'sword of the hero', "biggoron's sword", "sea-breeze shield",
-    "fierce deity sword", 'scimitar of the seven', 'white sword of the sky',
-    'lightscale trident', 'sea-breeze boomerang', 'daybreaker', 'hylian shield',
-    'great eagle bow', 'boulder breaker', 'dusk bow', 'master sword'
-];
-
-const challTypeWeightReduce = 0.5;  // factor by which challenge type weights are reduced each time they are chosen
 const challengeTypes = [
     // challenges with 1 item
     new ChallengeType('main quests', 23, 24, 3),
@@ -266,6 +260,45 @@ const challengeTypes = [
         difficulty => Math.max(Math.ceil(1.3 * difficulty), 1))
 ];
 
+
+class WeightedValue {
+    constructor(value, weight=1) {
+        this.value = value;
+        this.weight = weight;
+    }
+}
+
+
+// returns a random value from an array of WeightedValues
+// larger weights have a higher chance of being chosen
+function getWeightedRandom(weightValues, seededRandom) {
+    let weightSum = 0;
+    const weightedArray = weightValues.map(wv => {
+        weightSum += wv.weight;
+
+        return {
+            value: wv.value,
+            max: weightSum
+        };
+    });
+
+    const randNum = seededRandom.rand() * weightSum;
+    const value = weightedArray.find(wv => randNum < wv.max);
+    return value.value;
+}
+
+
+const uniqueEquipment = [
+    'sword of the hero', "biggoron's sword", "sea-breeze shield",
+    "fierce deity sword", 'scimitar of the seven', 'white sword of the sky',
+    'lightscale trident', 'sea-breeze boomerang', 'daybreaker', 'hylian shield',
+    'great eagle bow', 'boulder breaker', 'dusk bow', 'master sword'
+];
+
+
+let rand;
+
+const challTypeWeightReduce = 0.5;  // factor by which challenge type weights are reduced each time they are chosen
 const weightChallengeTypes = challengeTypes.map(ct => new WeightedValue(ct, ct.weight));
 
 
@@ -437,8 +470,6 @@ async function fetchAndGenerateBoard(size=5) {
 
 
 function fetchData() {
-    runningLocal = location.href.startsWith('file://');
-
     const compendiumPromise = fetch('https://botw-compendium.herokuapp.com/api/v3/compendium/all?game=totk')
         .then(response => {
             if (response.ok) return response.json();
@@ -450,46 +481,17 @@ function fetchData() {
             return data;
         });
 
-    if (!runningLocal) {
-        const mainQuestsPromise = fetch('./assets/data/main-quests.json')
-        .then(response => response.json());
-
-        const sideQuestsPromise = fetch('./assets/data/side-quests.json')
-        .then(response => response.json());
+    const otherEntriesPromise = fetch('/api/entries')
+        .then(response => {
+            if (response.ok) return response.json();
+            else console.error(response);
+        })
+        .then(data => {
+            return data;
+        });
         
-        const sideAdventuresPromise = fetch('./assets/data/side-adventures.json')
-        .then(response => response.json());
-        
-        const shrineQuestsPromise = fetch('./assets/data/shrine-quests.json')
-        .then(response => response.json());
-
-        const armorPromise = fetch('./assets/data/armor.json')
-        .then(response => response.json());
-
-        const armorSetsPromise = fetch('./assets/data/armor-sets.json')
-        .then(response => response.json()); 
-        
-        const miscItemsPromise = fetch('./assets/data/misc-items.json')
-        .then(response => response.json());
-        
-        return Promise.all([compendiumPromise, mainQuestsPromise, sideQuestsPromise, sideAdventuresPromise, shrineQuestsPromise, armorPromise, armorSetsPromise, miscItemsPromise])
-        .then(data => data.flat());
-    }
-
-    else {
-        return compendiumPromise;
-    }
-}
-
-
-// returns num amount of unique, random entries from data
-function getRandomEntries(num, data) {
-    const entries = new Set();
-    while (entries.size < num) {
-        const randEntry = data[rand.randInt(data.length)];
-        entries.add(randEntry);
-    }
-    return [...entries];
+    return Promise.all([compendiumPromise, otherEntriesPromise])
+        .then(data => data.flat(2));
 }
 
 
@@ -551,13 +553,6 @@ function getChallenge({category, id, name, edible, amount, challengeType}) {
     if (id === 159) return {challenge: "defeat a", entry: titleCase(name)};  // training construct
     if ((id >= 188 && id <= 190) || id === 202) return {challenge: "ride", entry: titleCase(name)};  // dragons
 
-    const uniqueEquipment = [
-        'sword of the hero', "biggoron's sword", "sea-breeze shield",
-        "fierce deity sword", 'scimitar of the seven', 'white sword of the sky',
-        'lightscale trident', 'sea-breeze boomerang', 'daybreaker', 'hylian shield',
-        'great eagle bow', 'boulder breaker', 'dusk bow', 'master sword'
-    ];
-
     if (uniqueEquipment.includes(name)) return {challenge: "obtain the", entry: titleCase(name)};
     
     // armor
@@ -598,6 +593,13 @@ function getChallenge({category, id, name, edible, amount, challengeType}) {
 }
 
 
+function titleCase(string) {
+    let words = string.split(" ");
+    words = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+    return words.join(" ");
+}
+
+
 function simplifyName(name, id) {
     const namesToSimplify = [
         'duck', 'pigeon', 'sparrow', 'seagull', 'bear', 'fox', 'buck', 'moose', 'sheep',
@@ -618,6 +620,7 @@ function simplifyName(name, id) {
 
     return name;
 }
+
 
 function getPlural(amount, name) {
     const words = name.split(" ");
@@ -641,33 +644,6 @@ function getPlural(amount, name) {
 }
 
 
-function endLoading() {
-    $('.title-container').css('animation-name', 'loading-end');
-    $('.title').attr('data-loading', 'false');
-    
-    showElement('main');
-    showElement('footer');
-}
-
-
-function getColorMode() {
-    return localStorage.getItem('color-mode') ?? $('body').attr('data-color-mode');
-}
-
-function setColorMode(colorMode) {
-    $('body').attr('data-color-mode', colorMode);
-    localStorage.setItem('color-mode', colorMode);
-}
-
-
-function handleColorModeToggle() {
-    let colorMode = getColorMode();
-    $('.color-mode-toggle .material-symbols-outlined').text(colorMode + '_mode');  // set colorMode toggle icon
-    colorMode = (colorMode === "dark") ? "light" : "dark";
-    setColorMode(colorMode);
-}
-
-
 function romanNumeral(string) {
     const romanNumerals = ['i', 'ii', 'iii', 'iv', 'v'];
     const romanNumberalPlurals = romanNumerals.map(string => string += "'s");
@@ -682,10 +658,32 @@ function romanNumeral(string) {
     return words.join(" ");
 }
 
-function titleCase(string) {
-    let words = string.split(" ");
-    words = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
-    return words.join(" ");
+
+function endLoading() {
+    $('.title-container').css('animation-name', 'loading-end');
+    $('.title').attr('data-loading', 'false');
+    
+    showElement('main');
+    showElement('footer');
+}
+
+
+function getColorMode() {
+    return localStorage.getItem('color-mode') ?? $('body').attr('data-color-mode');
+}
+
+
+function setColorMode(colorMode) {
+    $('body').attr('data-color-mode', colorMode);
+    localStorage.setItem('color-mode', colorMode);
+}
+
+
+function handleColorModeToggle() {
+    let colorMode = getColorMode();
+    $('.color-mode-toggle .material-symbols-outlined').text(colorMode + '_mode');  // set colorMode toggle icon
+    colorMode = (colorMode === "dark") ? "light" : "dark";
+    setColorMode(colorMode);
 }
 
 
@@ -705,34 +703,3 @@ function clamp(value, min, max) {
 function isBetween(value, min, max) {
     return (value >= min && value <= max);
 }
-
-
-// START OF code from bryc @ https://stackoverflow.com/a/47593316
-// hashing function
-function cyrb128(str) {
-    let h1 = 1779033703, h2 = 3144134277,
-        h3 = 1013904242, h4 = 2773480762;
-    for (let i = 0, k; i < str.length; i++) {
-        k = str.charCodeAt(i);
-        h1 = h2 ^ Math.imul(h1 ^ k, 597399067);
-        h2 = h3 ^ Math.imul(h2 ^ k, 2869860233);
-        h3 = h4 ^ Math.imul(h3 ^ k, 951274213);
-        h4 = h1 ^ Math.imul(h4 ^ k, 2716044179);
-    }
-    h1 = Math.imul(h3 ^ (h1 >>> 18), 597399067);
-    h2 = Math.imul(h4 ^ (h2 >>> 22), 2869860233);
-    h3 = Math.imul(h1 ^ (h3 >>> 17), 951274213);
-    h4 = Math.imul(h2 ^ (h4 >>> 19), 2716044179);
-    return (h1^h2^h3^h4)>>>0;
-}
-
-// random number generator
-function mulberry32(a) {
-    return function() {
-      var t = a += 0x6D2B79F5;
-      t = Math.imul(t ^ t >>> 15, t | 1);
-      t ^= t + Math.imul(t ^ t >>> 7, t | 61);
-      return ((t ^ t >>> 14) >>> 0) / 4294967296;
-    }
-}
-// END OF code from bryc @ https://stackoverflow.com/a/47593316
