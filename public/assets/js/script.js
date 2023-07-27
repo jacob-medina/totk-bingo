@@ -287,7 +287,7 @@ function getWeightedRandom(weightValues, seededRandom) {
     return value.value;
 }
 
-
+// move to server
 const uniqueEquipment = [
     'sword of the hero', "biggoron's sword", "sea-breeze shield",
     "fierce deity sword", 'scimitar of the seven', 'white sword of the sky',
@@ -295,8 +295,12 @@ const uniqueEquipment = [
     'great eagle bow', 'boulder breaker', 'dusk bow', 'master sword'
 ];
 
+const defaultBoardSize = 5;
+const defaultDiffMultiplier = 1.0;
 
 let rand;
+let boardSize = defaultBoardSize;
+let diffMultiplier = defaultDiffMultiplier;
 
 const challTypeWeightReduce = 0.5;  // factor by which challenge type weights are reduced each time they are chosen
 const weightChallengeTypes = challengeTypes.map(ct => new WeightedValue(ct, ct.weight));
@@ -324,6 +328,7 @@ function init() {
     $('.random-seed-btn').on('click', replaceNewSeed);
     $('#board-size-range').on('input', setBoardSize);
     $('#difficulty-range').on('input', setDifficulty);
+    $('.build-btn').on('click', handleOptionsFormSubmit);
 
     $(".color-mode-toggle").on("click", handleColorModeToggle); 
 
@@ -360,26 +365,42 @@ function replaceNewSeed(seed=undefined) {
 function handleOptionsFormSubmit(event) {
     event.preventDefault();
 
-    let seed = $('#seed-input').val();
+    let seed = $('#seed-input').val().trim();
 
     if (seed === "") {
         handleRandomSeedBtn();
         return;
     }
 
-    replaceNewSeed(seed);
+    const params = new URLSearchParams({
+        seed: seed,
+        boardSize: (boardSize !== defaultBoardSize) ? boardSize : undefined,
+        difficulty: (diffMultiplier !== defaultDiffMultiplier) ? diffMultiplier : undefined
+    });
+    let exclude = "";
+    $('.include-option').each(function() {
+        const opt = $(this);
+        if (opt.prop('checked')) return;
+        exclude += opt.attr('name') + ',';
+    });
+    exclude = exclude.slice(0, -1);
+
+    if (exclude !== "") params.exclude = exclude;
+    location.assign(url + `?seed=${seed}`);
+
+    // replaceNewSeed(seed);
 }
 
 
 function setBoardSize() {
-    const boardSize = $('#board-size-range').val();
+    boardSize = $('#board-size-range').val();
     const text = boardSize + 'x' + boardSize;
     $('.board-size').text(text);
 }
 
 
 function setDifficulty() {
-    const difficulty = parseFloat($('#difficulty-range').val()).toFixed(1);
+    diffMultiplier = parseFloat($('#difficulty-range').val()).toFixed(1);
     $('.difficulty').text(difficulty);
 }
 
@@ -425,7 +446,7 @@ function generateChallengeOptions() {
         const dashedName = challengeType.name.split(" ").join('-');
         html +=
 `<div>
-    <input type="checkbox" id="${dashedName}-option" name="${dashedName}" checked>
+    <input type="checkbox" id="${dashedName}-option" class="include-option" name="${dashedName}" checked>
     <label for="${dashedName}-option">${titleCase(challengeType.name)}</label>
 </div>`;
         html += "\n";
@@ -451,7 +472,7 @@ async function fetchAndGenerateBoard(size=5) {
         });
         const randChallengeType = getWeightedRandom(validChallengeTypes, rand);
         randChallengeType.weight = Math.round(randChallengeType.weight * challTypeWeightReduce * 100) / 100;  // reduce change to get same challenge type again
-        console.log(`${randChallengeType.name} weight:`, randChallengeType.weight);
+        // console.log(`${randChallengeType.name} weight:`, randChallengeType.weight);
         
         // TODO: get unique entries
         let randEntry = randChallengeType.getRandomEntry(rand);
@@ -479,6 +500,9 @@ function fetchData() {
             data = data.data;
             data.sort((a, b) => a.id - b.id);  // sort by id, ASC
             return data;
+        })
+        .catch(error => {
+            console.error(error);
         });
 
     const otherEntriesPromise = fetch('/api/entries')
@@ -488,6 +512,9 @@ function fetchData() {
         })
         .then(data => {
             return data;
+        })
+        .catch(error => {
+            console.error(error);
         });
         
     return Promise.all([compendiumPromise, otherEntriesPromise])
