@@ -38,8 +38,11 @@ class SeededRandom {
     // END OF code from bryc @ https://stackoverflow.com/a/47593316
 }
 
+const chars = '1234567890qwertyuiopasdfghjkzxcvbnm';
+
 function getRandSeed() {
-    return Math.random().toString().slice(2,8);
+    const randNums = Array(8).fill(0).map(() => chars.charAt(Math.floor(Math.random() * chars.length)));
+    return randNums.join("");
 }
 
 export { SeededRandom, getRandSeed };
