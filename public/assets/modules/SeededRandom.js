@@ -38,4 +38,8 @@ class SeededRandom {
     // END OF code from bryc @ https://stackoverflow.com/a/47593316
 }
 
-export { SeededRandom };
+function getRandSeed() {
+    return Math.random().toString().slice(2,8);
+}
+
+export { SeededRandom, getRandSeed };

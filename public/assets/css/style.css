@@ -20,14 +20,21 @@
 }
 
 :root {
-    --text-white: white;
     --text-light: #f0f0d2;
-    --text-light-transparent: #f0f0d2b4;
     --text-dark: #3f3730;
-    --bg-highlight: rgba(255,255,255,0.15);
+
+    --highlight-light: white;
+    --highlight-dark: #75675b;
+
+    --bg-highlight-light: rgba(255,255,255,0.15);
     --bg-highlight-dark: rgba(0, 0, 0, 0.3);
-    --green: rgba(64, 207, 139, 0.3);
+
     --green-dark: rgba(42, 138, 92, 0.5);
+    --green-light: rgba(64, 207, 139, 0.3);
+
+    --bg-img-dark: url("../images/background-dark.png") repeat;
+    --bg-img-light: url("../images/background-light.png") repeat;
+
     --debug: #87f8fd;
     --loading-spin-rotation: 0deg;
 }
@@ -68,7 +75,6 @@ html {
     flex-direction: column;
 
     margin: 0;
-    /* font-size: calc(12% + 8px); */
 }
 
 body {
@@ -76,18 +82,26 @@ body {
 
     flex-grow: 1;
 
-    background-image: url("../images/background-dark.png");
-    background-repeat: repeat;
-
-    color: var(--text-light);
-
+    --text-color: var(--text-light);
+    --opposite-color: var(--text-dark);
+    --highlight: var(--highlight-light);
+    --bg-highlight: var(--bg-highlight-dark);
+    --green: var(--green-dark);
+    --bg-img: var(--bg-img-dark);
+    
+    background: var(--bg-img);
+    
+    color: var(--text-color);
     font-family: "Calamity", sans-serif;
 }
 
 body[data-color-mode="light"] {
-    background-image: url("../images/background-light.png");
-
-    color: var(--text-dark);
+    --text-color: var(--text-dark);
+    --opposite-color: var(--text-light);
+    --highlight: var(--highlight-dark);
+    --bg-highlight: var(--bg-highlight-light);
+    --green: var(--green-light);
+    --bg-img: var(--bg-img-light);
 }
 
 header {
@@ -102,10 +116,14 @@ header {
     letter-spacing: 0.1rem;
 }
 
+header button {
+    font-family: 'Calamity', sans-serif;
+}
+
 button {
     background-color: transparent;
     border: none;
-    color: var(--text-light);
+    color: var(--text-color);
 }
 
 button:hover {
@@ -129,13 +147,11 @@ body[data-color-mode="light"] button {
 /* OPTIONS */
 
 .offcanvas {
-    color: var(--text-light);
+    color: var(--text-color);
 
-    background-color: var(--text-dark);
-    background-image: url("../images/background-dark.png");
-    background-repeat: repeat;
+    background: var(--bg-img);
 
-    border-left: 1px solid var(--text-light) !important;
+    border-left: 1px solid var(--text-color) !important;
 }
 
 .offcanvas-header {
@@ -166,7 +182,7 @@ body[data-color-mode="light"] button {
 }
 
 .offcanvas [aria-label="Close"] {
-    --bs-btn-close-color: var(--text-light);
+    --bs-btn-close-color: var(--text-color);
 }
 
 form input[type="text"] {
@@ -174,28 +190,34 @@ form input[type="text"] {
 
     background-color: transparent;
     border: none;
-    border-bottom: 2px solid var(--text-light);
+    border-bottom: 2px solid var(--text-color);
     
-    color: var(--text-light);
+    color: var(--text-color);
     font-family: "Calamity", sans-serif;
 }
 
-::placeholder {
-    color: var(--text-light);
+input[type="text"]:focus {
+    border-color: var(--highlight);
 }
 
-body[data-color-mode="light"] form input[type="text"],
-body[data-color-mode="light"] ::placeholder {
-    color: var(--text-dark);
-    border-color: var(--text-dark);
+::placeholder {
+    color: var(--text-color);
 }
 
 .text-icon-btn {
-    gap: 1rem;
+    gap: 0.6rem;
+    padding: 0.5rem;
+}
+
+.text-icon-btn:hover,
+.icon-btn:hover,
+div:has( > input[type="checkbox"]:hover) label  {
+    color: var(--highlight);
+    border-color: var(--highlight);
 }
 
 .outlined-btn {
-    border: 1px solid var(--text-light);
+    border: 1px solid var(--text-color);
     border-radius: 2px;
 }
 
@@ -204,15 +226,16 @@ input[type=range] {
     bottom: 0.6rem;
 }
 
+
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     border: none;
     height: 1rem;
     width: 1rem;
     border-radius: 50%;
-    background: var(--text-light);
+    background: var(--text-color);
     cursor: pointer;
-
+    
     position: relative;
     bottom: 0.1rem;
 }
@@ -221,10 +244,14 @@ input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     height: 0.2rem !important;
     cursor: pointer;
-    background: var(--text-light);
+    background: var(--text-color);
     border-radius: 0px;
     border: none;
     margin-top: 1rem;
+}
+
+input[type=range]:is(:hover,:focus)::-webkit-slider-thumb {
+    background: var(--highlight);
 }
 
 legend {
@@ -242,9 +269,9 @@ legend {
     bottom: 0;
 
     padding: 1rem;
-    padding-top: 1rem;
+    padding-top: 2rem;
 
-    background: linear-gradient(transparent, 20%, black);
+    background: linear-gradient(transparent, 1%, var(--opposite-color));
 }
 
 /* MAIN CONTENT */
@@ -359,7 +386,7 @@ h1 {
 
     aspect-ratio: 1.5/1;
 
-    border: 1px solid var(--text-light);
+    border: 1px solid var(--text-color);
 
     backdrop-filter: blur(3px);
 }
@@ -368,7 +395,7 @@ h1 {
     padding: 10px;
     position: relative;
 
-    border: 0.5px solid var(--text-light);
+    border: 0.5px solid var(--text-color);
 
     text-align: center;
 
@@ -377,30 +404,16 @@ h1 {
 
 .board-item:hover {
     cursor: pointer;
-    color: var(--text-white);
+    color: var(--highlight);
 }
 
 .board-item:hover:not(.done) {
     background-color: var(--bg-highlight);
 }
 
-body[data-color-mode="light"] :is(.bingo-board, .board-item:not(.done)) {
-    border-color: var(--text-dark);
-}
-
-body[data-color-mode="light"] .board-item:hover {
-    cursor: pointer;
-    background-color: var(--bg-highlight-dark);
-}
-
 .done {
-    background-color: var(--green-dark);
-    /* color: var(--text-light-transparent); */
-    backdrop-filter: blur(3px);
-}
-
-body[data-color-mode="light"] .done {
     background-color: var(--green);
+    backdrop-filter: blur(3px);
 }
 
 .board-item p {
@@ -445,8 +458,44 @@ body[data-color-mode="light"] .done {
 }
 
 
+/* FOOTER */
+
+footer {
+    width: 100%;
+
+    position: absolute;
+    bottom: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 1.5rem;
+}
+
+.random-seed-btn:has(#reroll) {
+    transform: scale(1);
+    transition: transform 0.2s;
+}
+
+.random-seed-btn:has(#reroll):hover {
+    transform: scale(1.1);
+    transition: transform 0.2s;
+}
+
+.random-seed-btn #reroll {
+    transform: rotate(0deg);
+    transition: transform 0.5s;
+}
+
+.random-seed-btn:hover #reroll {
+    transform: rotate(180deg);
+    transition: transform 0.5s;
+}
+
+
 /* MEDIA QUERIES */
 
-@media screen and (min-width: 680px) {
+/* @media screen and (min-width: 680px) {
     
-}
+} */

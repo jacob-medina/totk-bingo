@@ -1,6 +1,6 @@
 import { challengeTypes } from "./ChallengeType.js";
 import { titleCase } from "./formatName.js";
-import { hideElement, showElement } from "./helper.js";
+import { getRandSeed } from "./SeededRandom.js";
 
 
 const defaultBoardSize = 5;
@@ -11,16 +11,18 @@ let diffMultiplier = defaultDiffMultiplier;
 
 
 function handleRandomSeedBtn() {
-    const randSeed = Math.random().toString().slice(2,8);
+    const randSeed = getRandSeed();
     $('#seed-input').val(randSeed);
-    replaceNewSeed(randSeed);
+    const params = new URLSearchParams(new URL(location.href).search);
+    params.set('seed', randSeed)
+    newBoard(params);
 }
 
-// gives the site a new seed from input, or a random one instead
-function replaceNewSeed(seed=undefined) {
-    seed = seed ?? Math.random().toString().slice(2,8);
-    const url = location.href.split('?')[0]
-    location.assign(url + `?seed=${seed}`);
+
+function newBoard(params) {
+    const url = location.href.split('?')[0];
+    console.log(params.toString());
+    location.assign(url + "?" + params.toString());
 }
 
 
@@ -28,17 +30,14 @@ function handleOptionsFormSubmit(event) {
     event.preventDefault();
 
     let seed = $('#seed-input').val().trim();
-
     if (seed === "") {
-        handleRandomSeedBtn();
-        return;
+        const params = new URLSearchParams(new URL(location.href).search);
+        seed = params.get("seed");
     }
 
-    const params = new URLSearchParams({
-        seed: seed,
-        boardSize: (boardSize !== defaultBoardSize) ? boardSize : undefined,
-        difficulty: (diffMultiplier !== defaultDiffMultiplier) ? diffMultiplier : undefined
-    });
+    const params = new URLSearchParams({seed: seed});
+    if (boardSize != defaultBoardSize) params.append('boardSize', boardSize.toString());
+    if (diffMultiplier != defaultDiffMultiplier) params.append('difficulty', diffMultiplier.toString());
 
     let exclude = "";
     $('.include-option').each(function() {
@@ -48,36 +47,57 @@ function handleOptionsFormSubmit(event) {
     });
     exclude = exclude.slice(0, -1);
 
-    if (exclude !== "") params.exclude = exclude;
+    if (exclude !== "") params.append('exclude', exclude);
 
-    location.assign(url + `?seed=${seed}`);
-
-    // replaceNewSeed(seed);
+    newBoard(params);
 }
 
 
-function setBoardSize() {
-    boardSize = $('#board-size-range').val();
+function setBoardSize(val) {
+    boardSize = val;
+}
+
+function setDifficulty(val) {
+    diffMultiplier = val;
+}
+
+
+function setBoardSizeValue(val) {
+    if (val && val.type !== 'input') {
+        setBoardSize(val);
+        $('#board-size-range').val(boardSize);
+    }
+    else setBoardSize($('#board-size-range').val());
     const text = boardSize + 'x' + boardSize;
     $('.board-size').text(text);
 }
 
 
-function setDifficulty() {
-    diffMultiplier = parseFloat($('#difficulty-range').val()).toFixed(1);
+function setDifficultyValue(val) {
+    if (val && val.type !== 'input') {
+        setDifficulty(val);
+        $('#difficulty-range').val(diffMultiplier);
+    }
+    else setDifficulty( parseFloat($('#difficulty-range').val()).toFixed(1) );
     $('.difficulty').text(diffMultiplier);
 }
 
 
 function generateChallengeOptions() {
+    const params = new URLSearchParams(new URL(location.href).search);
+    const exclude = params.get("exclude");
+    let excludeTypes = [];
+    if (exclude) excludeTypes = exclude.split(',')
+    
     const optionsContainer = $('.challenge-options');
     let html = "";
 
     for (const challengeType of challengeTypes.sort((a, b) => b.diffMax - a.diffMax)) {
         const dashedName = challengeType.name.split(" ").join('-');
+        const checked = excludeTypes.includes(dashedName) ? "" : " checked";
         html +=
 `<div>
-    <input type="checkbox" id="${dashedName}-option" class="include-option" name="${dashedName}" checked>
+    <input type="checkbox" id="${dashedName}-option" class="include-option" name="${dashedName}" value="on" ${checked}>
     <label for="${dashedName}-option">${titleCase(challengeType.name)}</label>
 </div>`;
         html += "\n";
@@ -85,4 +105,4 @@ function generateChallengeOptions() {
     optionsContainer.append(html);
 }
 
-export { boardSize, diffMultiplier, handleRandomSeedBtn, replaceNewSeed, handleOptionsFormSubmit, setBoardSize, setDifficulty, showBoardStats, hideBoardStats, generateChallengeOptions };
+export { boardSize, diffMultiplier, defaultBoardSize, defaultDiffMultiplier, newBoard, handleRandomSeedBtn, handleOptionsFormSubmit, setBoardSize, setDifficulty, setBoardSizeValue, setDifficultyValue, generateChallengeOptions };

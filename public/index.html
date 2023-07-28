@@ -28,11 +28,17 @@
         </div>
 
         <div class="button-container">
-            <button type="button" class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#options-sidebar" aria-controls="options-sidebar">
+            <!-- <button type="button" class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#options-sidebar" aria-controls="options-sidebar">
+                <span class="material-symbols-outlined">tune</span>
+            </button> -->
+
+            <button type="button" class="text-icon-btn justify-start align-center" data-bs-toggle="offcanvas" data-bs-target="#options-sidebar" aria-controls="options-sidebar">
+                <span>Options</span>
                 <span class="material-symbols-outlined">tune</span>
             </button>
     
-            <button class="share-btn icon-btn">
+            <button class="text-icon-btn justify-start align-center">
+                <span>Share</span>
                 <span class="material-symbols-outlined">share</span>
             </button>
 
@@ -99,6 +105,7 @@
                 </div>
                 <br/>
                 <br/>
+                <br/>
             </form>
           </div>
           <div class="options-fixed-footer">
@@ -133,7 +140,10 @@
     </main>
 
     <footer class="hide">
-        
+        <button class="random-seed-btn text-icon-btn justify-start align-center">
+            <span>Reroll</span>
+            <span id="reroll" class="material-symbols-outlined">autorenew</span>
+        </button>
     </footer>
 
     <div class="debug">
@@ -141,7 +151,12 @@
             <span class="material-symbols-outlined">bug_report</span>
         </button>
         
-        <button class="hide-stats-btn icon-btn hide">Hide Stats</button>
+        <button class="hide-stats-btn icon-btn hide">
+            <span>*</span>
+            <span class="material-symbols-outlined">bug_report</span>
+            <span>*</span>
+        </button>
+        <!-- <button class="hide-stats-btn icon-btn hide">Hide Stats</button> -->
     </div>
 
     <!-- jQuery -->

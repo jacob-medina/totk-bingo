@@ -1,11 +1,11 @@
-import { SeededRandom } from "./assets/modules/SeededRandom.js";
+import { SeededRandom, getRandSeed } from "./assets/modules/SeededRandom.js";
 import { MagicSquare } from "./assets/modules/MagicSquare.js";
 import { challengeTypes, challTypeWeightReduce, weightedChallengeTypes } from "./assets/modules/ChallengeType.js";
 import { getWeightedRandom } from "./assets/modules/WeightedValue.js";
 import { uniqueEquipment } from "./assets/modules/uniqueEpuipment.js";
 import { fetchData } from "./assets/modules/fetchData.js";
 import { titleCase, simplifyName, getPlural, romanNumeral } from "./assets/modules/formatName.js";
-import { handleRandomSeedBtn, replaceNewSeed, handleOptionsFormSubmit, setBoardSize, setDifficulty, generateChallengeOptions } from "./assets/modules/options.js";
+import { handleRandomSeedBtn, newBoard, handleOptionsFormSubmit, setBoardSize, setDifficulty, setBoardSizeValue, setDifficultyValue, generateChallengeOptions, boardSize, defaultBoardSize, diffMultiplier, defaultDiffMultiplier } from "./assets/modules/options.js";
 import { isBetween, hideElement, showElement } from "./assets/modules/helper.js";
 
 let rand;
@@ -16,23 +16,27 @@ function init() {
     const params = new URLSearchParams(url.search);
     const seed = params.get("seed");
 
-    if (seed === null) {
-        replaceNewSeed();
+    // TODO: random seeds not occurring
+    if (!params.has('seed')) {
+        newBoard(new URLSearchParams({seed: getRandSeed()}));
         return;
     }
 
     rand = new SeededRandom(seed);
+    $('.seed-input').val(seed);
+
+    setBoardSizeValue( params.get('boardSize') ?? defaultBoardSize );
+    setDifficultyValue( params.get('difficulty') ?? defaultDiffMultiplier );
     
     setColorMode(getColorMode());
-    $('.seed').val(seed);
 
     $('.bingo-board').on('click', '.board-item', handleBoardClick);
 
     // options
     $('.options-form').on('submit', handleOptionsFormSubmit);
-    $('.random-seed-btn').on('click', replaceNewSeed);
-    $('#board-size-range').on('input', setBoardSize);
-    $('#difficulty-range').on('input', setDifficulty);
+    $('.random-seed-btn').on('click', handleRandomSeedBtn);
+    $('#board-size-range').on('input', setBoardSizeValue);
+    $('#difficulty-range').on('input', setDifficultyValue);
     $('.build-btn').on('click', handleOptionsFormSubmit);
 
     $(".color-mode-toggle").on("click", handleColorModeToggle); 
@@ -42,7 +46,7 @@ function init() {
     $('.hide-stats-btn').on('click', hideBoardStats);
 
     generateChallengeOptions();
-    fetchAndGenerateBoard(5);
+    fetchAndGenerateBoard(boardSize);
 }
 
 $(init());
