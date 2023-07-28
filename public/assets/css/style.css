@@ -85,7 +85,7 @@ body {
     --text-color: var(--text-light);
     --opposite-color: var(--text-dark);
     --highlight: var(--highlight-light);
-    --bg-highlight: var(--bg-highlight-dark);
+    --bg-highlight: var(--bg-highlight-light);
     --green: var(--green-dark);
     --bg-img: var(--bg-img-dark);
     
@@ -99,7 +99,7 @@ body[data-color-mode="light"] {
     --text-color: var(--text-dark);
     --opposite-color: var(--text-light);
     --highlight: var(--highlight-dark);
-    --bg-highlight: var(--bg-highlight-light);
+    --bg-highlight: var(--bg-highlight-dark);
     --green: var(--green-light);
     --bg-img: var(--bg-img-light);
 }
@@ -196,7 +196,9 @@ form input[type="text"] {
     font-family: "Calamity", sans-serif;
 }
 
-input[type="text"]:focus {
+input[type="text"]:is(:focus, :hover),
+input[type="text"]:is(:focus, :hover) ::placeholder {
+    color: var(--highlight);
     border-color: var(--highlight);
 }
 
@@ -265,13 +267,14 @@ legend {
 .options-fixed-footer {
     width: 100%;
 
-    position: fixed;
-    bottom: 0;
+    /* position: fixed;
+    bottom: 0; */
 
     padding: 1rem;
-    padding-top: 2rem;
+    gap: 2rem;
+    /* padding-top: 2rem; */
 
-    background: linear-gradient(transparent, 1%, var(--opposite-color));
+    /* background: linear-gradient(transparent, 1%, var(--opposite-color)); */
 }
 
 /* MAIN CONTENT */

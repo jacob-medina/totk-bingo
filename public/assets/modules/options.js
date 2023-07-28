@@ -92,7 +92,8 @@ function generateChallengeOptions() {
     const optionsContainer = $('.challenge-options');
     let html = "";
 
-    for (const challengeType of challengeTypes.sort((a, b) => b.diffMax - a.diffMax)) {
+    for (const challengeType of challengeTypes.sort((a, b) => (a.name < b.name) ? -1 : 1)) {
+        console.log(challengeType.name);
         const dashedName = challengeType.name.split(" ").join('-');
         const checked = excludeTypes.includes(dashedName) ? "" : " checked";
         html +=
