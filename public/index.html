@@ -28,16 +28,12 @@
         </div>
 
         <div class="button-container">
-            <!-- <button type="button" class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#options-sidebar" aria-controls="options-sidebar">
-                <span class="material-symbols-outlined">tune</span>
-            </button> -->
-
             <button type="button" class="text-icon-btn justify-start align-center" data-bs-toggle="offcanvas" data-bs-target="#options-sidebar" aria-controls="options-sidebar">
                 <span>Options</span>
                 <span class="material-symbols-outlined">tune</span>
             </button>
     
-            <button class="text-icon-btn justify-start align-center">
+            <button class="text-icon-btn justify-start align-center" data-bs-toggle="offcanvas" data-bs-target="#share-sidebar" aria-controls="share-sidebar">
                 <span>Share</span>
                 <span class="material-symbols-outlined">share</span>
             </button>
@@ -103,7 +99,15 @@
                         </fieldset>
                     </div>
                 </div>
-                <!-- <br/> -->
+                <br/>
+                <!-- Reset Section -->
+                <div class="options-section container-fluid">
+                    <button type="button" class="outlined-btn text-icon-btn reset-btn justify-start align-center">
+                        <span>Reset Options</span>
+                        <span class="material-symbols-outlined">restart_alt</span>
+                    </button>
+                </div>
+                <br/>
             </form>
         </div>
         <div class="options-fixed-footer justify-start align-center">
@@ -113,11 +117,30 @@
             </button>
             <button type="button" class="text-icon-btn justify-start align-center" data-bs-dismiss="offcanvas" aria-label="Close">
                 <span>Cancel</span>
-                <!-- <span class="material-symbols-outlined">close</span> -->
             </button>
         </div>
     </div>
 
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="share-sidebar" aria-labelledby="share-label">
+
+        <div class="offcanvas-header">
+            <h4 class="offcanvas-title" id="share-label">Share</h4>
+            <button type="button" class="icon-btn" data-bs-dismiss="offcanvas" aria-label="Close">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <div class="offcanvas-body">
+            <p>Copy the link below:</p>
+            <div class="justify-start align-center">
+                <input type="text" name="url" id="share-url" readonly aria-readonly="true" onclick="this.select()">
+                <button type="button" class="icon-btn copy-link-btn">
+                    <span class="material-symbols-outlined">content_copy</span>
+                </button>
+                <small class="hide">Copied link!</small>
+            </div>
+        </div>
+    </div>
     <main class="hide">
         <div class="wrapper justify-center align-center">
             <div class="bingo-board"></div>

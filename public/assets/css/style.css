@@ -36,6 +36,7 @@
     --bg-img-light: url("../images/background-light.png") repeat;
 
     --debug: #87f8fd;
+    --error: #ff5b5b;
     --loading-spin-rotation: 0deg;
 }
 
@@ -44,6 +45,10 @@
 
 .hide {
     display: none !important;
+}
+
+.error {
+    color: var(--error) !important;
 }
 
 .flex-column {
@@ -185,7 +190,7 @@ body[data-color-mode="light"] button {
     --bs-btn-close-color: var(--text-color);
 }
 
-form input[type="text"] {
+input[type="text"] {
     padding: 0.5rem;
 
     background-color: transparent;
@@ -221,6 +226,10 @@ div:has( > input[type="checkbox"]:hover) label  {
 .outlined-btn {
     border: 1px solid var(--text-color);
     border-radius: 2px;
+}
+
+.outlined-btn:active {
+    background-color: var(--bg-highlight);
 }
 
 input[type=range] {
@@ -275,6 +284,17 @@ legend {
     /* padding-top: 2rem; */
 
     /* background: linear-gradient(transparent, 1%, var(--opposite-color)); */
+}
+
+
+/* SHARE */
+
+div:has( > #share-url) {
+    gap: 1rem;
+}
+
+#share-url {
+    text-overflow: ellipsis;
 }
 
 /* MAIN CONTENT */

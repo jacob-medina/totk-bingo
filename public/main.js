@@ -5,8 +5,9 @@ import { getWeightedRandom } from "./assets/modules/WeightedValue.js";
 import { uniqueEquipment } from "./assets/modules/uniqueEpuipment.js";
 import { fetchData } from "./assets/modules/fetchData.js";
 import { titleCase, simplifyName, getPlural, romanNumeral } from "./assets/modules/formatName.js";
-import { handleRandomSeedBtn, newBoard, handleOptionsFormSubmit, setBoardSize, setDifficulty, setBoardSizeValue, setDifficultyValue, generateChallengeOptions, boardSize, defaultBoardSize, diffMultiplier, defaultDiffMultiplier } from "./assets/modules/options.js";
+import { handleRandomSeedBtn, newBoard, handleOptionsFormSubmit, setBoardSizeValue, setDifficultyValue, generateChallengeOptions, boardSize, defaultBoardSize, diffMultiplier, defaultDiffMultiplier, resetOptions } from "./assets/modules/options.js";
 import { isBetween, hideElement, showElement } from "./assets/modules/helper.js";
+import { updateShareURL, copyShareURL } from "./assets/modules/share.js";
 
 let rand;
 
@@ -24,6 +25,7 @@ function init() {
 
     rand = new SeededRandom(seed);
     $('.seed-input').val(seed);
+    updateShareURL();
 
     setBoardSizeValue( params.get('boardSize') ?? defaultBoardSize );
     setDifficultyValue( params.get('difficulty') ?? defaultDiffMultiplier );
@@ -31,6 +33,7 @@ function init() {
     setColorMode(getColorMode());
 
     $('.bingo-board').on('click', '.board-item', handleBoardClick);
+    $(".color-mode-toggle").on("click", handleColorModeToggle); 
 
     // options
     $('.options-form').on('submit', handleOptionsFormSubmit);
@@ -38,8 +41,10 @@ function init() {
     $('#board-size-range').on('input', setBoardSizeValue);
     $('#difficulty-range').on('input', setDifficultyValue);
     $('.build-btn').on('click', handleOptionsFormSubmit);
+    $('.reset-btn').on('click', resetOptions);
 
-    $(".color-mode-toggle").on("click", handleColorModeToggle); 
+    // share
+    $('.copy-link-btn').on('click', copyShareURL);
 
     // debug
     $('.show-stats-btn').on('click', showBoardStats);

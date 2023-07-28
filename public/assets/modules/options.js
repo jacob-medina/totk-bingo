@@ -53,6 +53,20 @@ function handleOptionsFormSubmit(event) {
 }
 
 
+function resetOptions() {
+    const url = new URL(location.href);
+    const params = new URLSearchParams(url.search);
+
+    $('.seed').val(params.get("seed"));
+    setBoardSizeValue(defaultBoardSize);
+    setDifficultyValue(defaultDiffMultiplier);
+
+    $('.include-option').each(function() {
+        $(this).prop('checked', true);
+    });
+}
+
+
 function setBoardSize(val) {
     boardSize = val;
 }
@@ -93,12 +107,11 @@ function generateChallengeOptions() {
     let html = "";
 
     for (const challengeType of challengeTypes.sort((a, b) => (a.name < b.name) ? -1 : 1)) {
-        console.log(challengeType.name);
         const dashedName = challengeType.name.split(" ").join('-');
         const checked = excludeTypes.includes(dashedName) ? "" : " checked";
         html +=
 `<div>
-    <input type="checkbox" id="${dashedName}-option" class="include-option" name="${dashedName}" value="on" ${checked}>
+    <input type="checkbox" id="${dashedName}-option" class="include-option" name="${dashedName}" ${checked}>
     <label for="${dashedName}-option">${titleCase(challengeType.name)}</label>
 </div>`;
         html += "\n";
@@ -106,4 +119,4 @@ function generateChallengeOptions() {
     optionsContainer.append(html);
 }
 
-export { boardSize, diffMultiplier, defaultBoardSize, defaultDiffMultiplier, newBoard, handleRandomSeedBtn, handleOptionsFormSubmit, setBoardSize, setDifficulty, setBoardSizeValue, setDifficultyValue, generateChallengeOptions };
+export { boardSize, diffMultiplier, defaultBoardSize, defaultDiffMultiplier, newBoard, handleRandomSeedBtn, handleOptionsFormSubmit, resetOptions, setBoardSize, setDifficulty, setBoardSizeValue, setDifficultyValue, generateChallengeOptions };
