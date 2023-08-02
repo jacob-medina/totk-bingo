@@ -6,7 +6,7 @@ import { uniqueEquipment } from "./assets/modules/uniqueEpuipment.js";
 import { fetchData } from "./assets/modules/fetchData.js";
 import { titleCase, simplifyName, getPlural, romanNumeral } from "./assets/modules/formatName.js";
 import { handleRandomSeedBtn, newBoard, handleOptionsFormSubmit, setBoardSizeValue, setDifficultyValue, generateChallengeOptions, boardSize, defaultBoardSize, diffMultiplier, defaultDiffMultiplier, resetOptions } from "./assets/modules/options.js";
-import { isBetween, hideElement, showElement } from "./assets/modules/helper.js";
+import { isBetween, clamp, hideElement, showElement } from "./assets/modules/helper.js";
 import { updateShareURL, copyShareURL } from "./assets/modules/share.js";
 
 let rand;
@@ -94,11 +94,14 @@ function createChallenges(size, data) {
     
     // choose a random entry for each difficulty
     for (const difficulty of magicSquare._matrix.flat()) {
+        // adjust difficulty by diffMultiplier 
+        const adjustedDiff = clamp(Math.round(difficulty * diffMultiplier), 0, 23);
+
         // get challenge types with current difficulty in their range
         const validChallengeTypes = weightedChallengeTypes.filter(challengeType => {
             challengeType = challengeType.value;
             if (excludeChallTypes.includes(challengeType.name)) return false;
-            return isBetween(difficulty, challengeType.diffMin, challengeType.diffMax);
+            return isBetween(adjustedDiff, challengeType.diffMin, challengeType.diffMax);
         });
 
         if (validChallengeTypes.length < 1) return [];
@@ -110,8 +113,8 @@ function createChallenges(size, data) {
         let randEntry = randChallengeType.getRandomEntry(rand);
         randEntry = structuredClone(randEntry);
         randEntry.challengeType = randChallengeType.name;
-        randEntry.difficulty = difficulty;
-        randEntry.amount = randChallengeType.calcAmount(difficulty);
+        randEntry.difficulty = adjustedDiff;
+        randEntry.amount = randChallengeType.calcAmount(adjustedDiff);
         
         entries.push(randEntry);
     }
