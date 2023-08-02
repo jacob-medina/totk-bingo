@@ -27,13 +27,13 @@
     --highlight-dark: #75675b;
 
     --bg-highlight-light: rgba(255,255,255,0.15);
-    --bg-highlight-dark: rgba(0, 0, 0, 0.3);
+    --bg-highlight-dark: rgba(223, 209, 186, 0.241);
 
     --green-dark: rgba(42, 138, 92, 0.5);
-    --green-light: rgba(64, 207, 139, 0.3);
+    --green-light: rgba(35, 205, 123, 0.3);
 
     --bg-img-dark: url("../images/background-dark.png") repeat;
-    --bg-img-light: url("../images/background-light.png") repeat;
+    --bg-img-light: url("../images/background-light.png") repeat center/70%;
 
     --debug: #87f8fd;
     --error: #ff5b5b;
@@ -157,6 +157,11 @@ body[data-color-mode="light"] button {
     background: var(--bg-img);
 
     border-left: 1px solid var(--text-color) !important;
+}
+
+body[data-color-mode="light"] .offcanvas {
+    background: var(--bg-img-light);
+    background-size: 200%;
 }
 
 .offcanvas-header {
@@ -434,7 +439,8 @@ h1 {
     background-color: var(--bg-highlight);
 }
 
-.done {
+.done,
+.board-item:active:not(.done) {
     background-color: var(--green);
     backdrop-filter: blur(3px);
 }

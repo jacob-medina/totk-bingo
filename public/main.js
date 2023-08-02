@@ -10,15 +10,17 @@ import { isBetween, hideElement, showElement } from "./assets/modules/helper.js"
 import { updateShareURL, copyShareURL } from "./assets/modules/share.js";
 
 let rand;
+let url;
+let searchParams;
 
 
 function init() {
-    const url = new URL(location.href);
-    const params = new URLSearchParams(url.search);
-    const seed = params.get("seed");
+    url = new URL(location.href);
+    searchParams = new URLSearchParams(url.search);
+    const seed = searchParams.get("seed");
 
     // TODO: random seeds not occurring
-    if (!params.has('seed')) {
+    if (!searchParams.has('seed')) {
         newBoard(new URLSearchParams({seed: getRandSeed()}));
         return;
     }
@@ -27,8 +29,8 @@ function init() {
     $('.seed-input').val(seed);
     updateShareURL();
 
-    setBoardSizeValue( params.get('boardSize') ?? defaultBoardSize );
-    setDifficultyValue( params.get('difficulty') ?? defaultDiffMultiplier );
+    setBoardSizeValue( searchParams.get('boardSize') ?? defaultBoardSize );
+    setDifficultyValue( searchParams.get('difficulty') ?? defaultDiffMultiplier );
     
     setColorMode(getColorMode());
 
@@ -59,7 +61,11 @@ $(init());
 
 function handleBoardClick() {
     const boardItem = $(this);
-    boardItem.addClass('done');
+    if (boardItem.hasClass('done')) {
+        boardItem.removeClass('done');
+    }
+
+    else boardItem.addClass('done');
 }
 
 
@@ -77,6 +83,12 @@ function createChallenges(size, data) {
     const magicSquare = new MagicSquare(size);
     const entries = [];
 
+    let excludeChallTypes = [];
+    if (searchParams.get("exclude")) {
+        excludeChallTypes = searchParams.get('exclude').split(',');  // get different challenge types
+        excludeChallTypes = excludeChallTypes.map(el => el.split('-').join(" "));  // replace dashes with spaces in name
+    }
+
     // get all entries for challenge types
     challengeTypes.forEach(type => type.getEntries(data));
     
@@ -85,11 +97,14 @@ function createChallenges(size, data) {
         // get challenge types with current difficulty in their range
         const validChallengeTypes = weightedChallengeTypes.filter(challengeType => {
             challengeType = challengeType.value;
+            if (excludeChallTypes.includes(challengeType.name)) return false;
             return isBetween(difficulty, challengeType.diffMin, challengeType.diffMax);
         });
+
+        if (validChallengeTypes.length < 1) return [];
+
         const randChallengeType = getWeightedRandom(validChallengeTypes, rand);
         randChallengeType.weight = Math.round(randChallengeType.weight * challTypeWeightReduce * 100) / 100;  // reduce change to get same challenge type again
-        // console.log(`${randChallengeType.name} weight:`, randChallengeType.weight);
         
         // TODO: get unique entries
         let randEntry = randChallengeType.getRandomEntry(rand);
@@ -106,6 +121,13 @@ function createChallenges(size, data) {
 
 
 function generateBingoBoard(size=5, entries) {
+    if (entries.length < size * size) {
+        console.error('Could not get enough entries!');
+        const errorMessage = $('<div class="justify-center align-center">Could not get enough challenges!</div>')
+        $('.bingo-board').append(errorMessage);
+        return;
+    }
+
     $('.bingo-board').css('grid-template-columns', `repeat(${size}, ${100/size}%)`);
     $('.bingo-board').css('grid-template-rows', `repeat(${size}, ${100/size}%)`);
     
@@ -117,7 +139,7 @@ function generateBingoBoard(size=5, entries) {
 
         const challengeText = $('<p class="challenge-text">');
         const itemText = $('<p class="item-text">');
-        const stats = $('<div class="item-stats">')
+        const stats = $('<div class="item-stats">');
         const difficultyText = $('<p class="item-text">');
         
         const challenge = getChallenge(entry);
@@ -220,6 +242,9 @@ function getColorMode() {
 function setColorMode(colorMode) {
     $('body').attr('data-color-mode', colorMode);
     localStorage.setItem('color-mode', colorMode);
+
+    const oppositeMode = (colorMode === "dark") ? "light" : "dark";
+    $('.color-mode-toggle .material-symbols-outlined').text(oppositeMode + '_mode');  // set colorMode toggle icon
 }
 
 
