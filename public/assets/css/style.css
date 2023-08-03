@@ -32,6 +32,9 @@
     --green-dark: rgba(42, 138, 92, 0.5);
     --green-light: rgba(35, 205, 123, 0.3);
 
+    --orange-dark: rgba(138, 98, 42, 0.5);
+    --orange-light: rgba(205, 151, 35, 0.3);
+
     --bg-img-dark: url("../images/background-dark.png") repeat;
     --bg-img-light: url("../images/background-light.png") repeat center/70%;
 
@@ -92,6 +95,7 @@ body {
     --highlight: var(--highlight-light);
     --bg-highlight: var(--bg-highlight-light);
     --green: var(--green-dark);
+    --orange: var(--orange-dark);
     --bg-img: var(--bg-img-dark);
     
     background: var(--bg-img);
@@ -106,6 +110,7 @@ body[data-color-mode="light"] {
     --highlight: var(--highlight-dark);
     --bg-highlight: var(--bg-highlight-dark);
     --green: var(--green-light);
+    --orange: var(--orange-light);
     --bg-img: var(--bg-img-light);
 }
 
@@ -435,14 +440,22 @@ h1 {
     color: var(--highlight);
 }
 
-.board-item:hover:not(.done) {
+.board-item:hover:not(:is(.done-1, .done-2)) {
     background-color: var(--bg-highlight);
 }
 
-.done,
-.board-item:active:not(.done) {
-    background-color: var(--green);
+.done-1,
+.done-2 {
     backdrop-filter: blur(3px);
+}
+
+.done-1 {
+/* .board-item:active:not(.done) { */
+    background-color: var(--green);
+}
+
+.done-2 {
+    background-color: var(--orange);
 }
 
 .board-item p {

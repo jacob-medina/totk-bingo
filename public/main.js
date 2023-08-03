@@ -10,7 +10,7 @@ import { isBetween, clamp, hideElement, showElement } from "./assets/modules/hel
 import { updateShareURL, copyShareURL } from "./assets/modules/share.js";
 
 import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
-import { startRace } from './assets/modules/race.js';
+import { createRoom, joinRoom, room, clientNum } from './assets/modules/race.js';
 
 let rand;
 let url;
@@ -20,6 +20,17 @@ const socket = io(location.origin);
 
 socket.on('connect', () => {
     console.log(`You connected with ID: ${socket.id}`);
+
+    socket.on('receive-board-click', ({boardItem, clientNum, active}) => {
+        boardItem = $('#' + boardItem);
+
+        if (active === true) {
+            boardItem.addClass(`done-${clientNum}`);
+            return;
+        }
+
+        boardItem.removeClass(`done-${clientNum}`);
+    })
 });
 
 function init() {
@@ -58,7 +69,8 @@ function init() {
     $('.copy-link-btn').on('click', copyShareURL);
 
     //race
-    $('.race-btn').on('click', () => startRace(socket));
+    $('.create-room-btn').on('click', () => createRoom(socket));
+    $('.join-room-btn').on('click', () => joinRoom(socket));
 
     // debug
     $('.show-stats-btn').on('click', showBoardStats);
@@ -73,11 +85,18 @@ $(init());
 
 function handleBoardClick() {
     const boardItem = $(this);
-    if (boardItem.hasClass('done')) {
-        boardItem.removeClass('done');
-    }
 
-    else boardItem.addClass('done');
+    const oppositeNum = (clientNum === 1) ? 2 : 1;
+    if (boardItem.hasClass(`done-${oppositeNum}`)) return;  // cancel if taken by other client
+
+    boardItem.toggleClass(`done-${clientNum}`);
+
+    socket.emit('board-click', room, {
+        boardItem: boardItem.attr('id'),
+        clientNum: clientNum,
+        active: boardItem.hasClass(`done-${clientNum}`)
+    });
+
 }
 
 
@@ -149,7 +168,7 @@ function generateBingoBoard(size=5, entries) {
     for (let i=0; i < size*size; i++) {
         const entry = entries[i];
 
-        const boardItem = $('<div class="board-item flex-column justify-center align-center">');
+        const boardItem = $(`<div id="item-${i}" class="board-item flex-column justify-center align-center">`);
         boardItem.data('entry', entry);
 
         const challengeText = $('<p class="challenge-text">');
