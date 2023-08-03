@@ -10,18 +10,20 @@ let boardSize = defaultBoardSize;
 let diffMultiplier = defaultDiffMultiplier;
 
 
-function handleRandomSeedBtn() {
+function handleRandomSeedBtn(reload=true) {
     const randSeed = getRandSeed();
     $('#seed-input').val(randSeed);
+
+    if (!reload) return;
+
     const params = new URLSearchParams(new URL(location.href).search);
-    params.set('seed', randSeed)
+    params.set('seed', randSeed);
     newBoard(params);
 }
 
 
 function newBoard(params) {
     const url = location.href.split('?')[0];
-    console.log(params.toString());
     location.assign(url + "?" + params.toString());
 }
 

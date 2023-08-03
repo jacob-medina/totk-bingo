@@ -26,7 +26,7 @@ function init() {
     }
 
     rand = new SeededRandom(seed);
-    $('.seed-input').val(seed);
+    $('#seed-input').val(seed);
     updateShareURL();
 
     setBoardSizeValue( searchParams.get('boardSize') ?? defaultBoardSize );
@@ -39,7 +39,8 @@ function init() {
 
     // options
     $('.options-form').on('submit', handleOptionsFormSubmit);
-    $('.random-seed-btn').on('click', handleRandomSeedBtn);
+    $('.reroll-btn').on('click', () => handleRandomSeedBtn());
+    $('.random-seed-btn').on('click', () => handleRandomSeedBtn(false));
     $('#board-size-range').on('input', setBoardSizeValue);
     $('#difficulty-range').on('input', setDifficultyValue);
     $('.build-btn').on('click', handleOptionsFormSubmit);

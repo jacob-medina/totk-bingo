@@ -4,11 +4,11 @@
 
 [Click here to visit the website.](https://totkbingo-728f1f6f6e8d.herokuapp.com/)
 
-A bingo board of randomly generated challenges for Tears of the Kingdom.
+A bingo board of randomly generated challenges for The Legend of Zelda: Tears of the Kingdom.
 
 ![Home Page Preview](./readme-assets/home-page-preview.png)
 
-The aim of this project is to bring a robust, high quality bingo board game to the Tears of the Kingdom community. The use of seeded random number generation allows any user to get the same board with the same seed.
+The aim of this project is to bring a robust, high quality bingo board game to the Tears of the Kingdom community. The use of seeded random number generation allows any user to get the same board with a given seed. Users can adjust settings to build different types of bingo boards.
 
 
 ## How to Play
@@ -43,6 +43,11 @@ You can change the following...
 - Include/Exclude any type of challenge
 
 Then click the **Build Board** button to build your board with the new options.
+
+### Prefer Light Mode?
+
+![Light Mode Preview](./readme-assets/light-mode-preview.png)
+Click the **Sun/Moon** icon at the top right to toggle between light and dark mode.
 
 
 ## Credits
