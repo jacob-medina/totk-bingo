@@ -9,10 +9,18 @@ import { handleRandomSeedBtn, newBoard, handleOptionsFormSubmit, setBoardSizeVal
 import { isBetween, clamp, hideElement, showElement } from "./assets/modules/helper.js";
 import { updateShareURL, copyShareURL } from "./assets/modules/share.js";
 
+import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
+import { startRace } from './assets/modules/race.js';
+
 let rand;
 let url;
 let searchParams;
 
+const socket = io(location.origin);
+
+socket.on('connect', () => {
+    console.log(`You connected with ID: ${socket.id}`);
+});
 
 function init() {
     url = new URL(location.href);
@@ -48,6 +56,9 @@ function init() {
 
     // share
     $('.copy-link-btn').on('click', copyShareURL);
+
+    //race
+    $('.race-btn').on('click', () => startRace(socket));
 
     // debug
     $('.show-stats-btn').on('click', showBoardStats);

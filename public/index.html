@@ -38,6 +38,11 @@
                 <span class="material-symbols-outlined">share</span>
             </button>
 
+            <button class="text-icon-btn justify-start align-center" data-bs-toggle="offcanvas" data-bs-target="#race-sidebar" aria-controls="race-sidebar">
+                <span>Race</span>
+                <span class="material-symbols-outlined">sports_score</span>
+            </button>
+
             <button class="color-mode-toggle icon-btn">
                 <span class="material-symbols-outlined">light_mode</span>
             </button>
@@ -138,6 +143,37 @@
                     <span class="material-symbols-outlined">content_copy</span>
                 </button>
                 <small class="hide">Copied link!</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="race-sidebar" aria-labelledby="race-label">
+
+        <div class="offcanvas-header">
+            <h4 class="offcanvas-title" id="race-label">Race</h4>
+            <button type="button" class="icon-btn" data-bs-dismiss="offcanvas" aria-label="Close">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <div class="offcanvas-body">
+            <p>Join a room:</p>
+            <div class="justify-start align-center">
+                <input type="text" id="join-room-name" placeholder="Room Name">
+                <button type="button" class="join-room-btn text-icon-btn outlined-btn justify-start align-center">
+                    <span>Join</span>
+                    <span class="material-symbols-outlined">meeting_room</span>
+                </button>
+            </div>
+            <br />
+    
+            <p>Create a room:</p>
+            <div class="justify-start align-center">
+                <input type="text" id="join-room-name" placeholder="Room Name">
+                <button type="button" class="create-room-btn text-icon-btn outlined-btn justify-start align-center">
+                    <span>Create</span>
+                    <span class="material-symbols-outlined">add</span>
+                </button>
             </div>
         </div>
     </div>
