@@ -536,6 +536,36 @@ footer {
 }
 
 
+/* RACE */
+
+.player-container {
+    gap: 2rem;
+}
+
+.player-container .material-symbols-outlined {
+    font-size: 3rem;
+}
+
+.player-container p {
+    margin: 0;
+
+    font-family: "Hylia Serif";
+    font-size: 2rem;
+}
+
+.player-container .ready-icon {
+    font-size: 2rem;
+}
+
+.player-container .ready-icon[data-ready=false] {
+    opacity: 80%;
+}
+
+.player-container .ready-icon[data-ready=true] {
+    color: var(--green);
+}
+
+
 /* MEDIA QUERIES */
 
 /* @media screen and (min-width: 680px) {

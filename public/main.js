@@ -7,7 +7,7 @@ import { updateShareURL, copyShareURL } from "./assets/modules/share.js";
 import { fetchAndGenerateBoard } from "./assets/modules/board.js";
 
 import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
-import { createRoom, joinRoom, room, clientNum } from './assets/modules/race.js';
+import { createRoom, joinRoom, room, clientNum, handleReadyBtn, generatePlayerMenu, onConnect } from './assets/modules/race.js';
 
 let rand;
 let url;
@@ -15,20 +15,7 @@ let searchParams;
 
 const socket = io(location.origin);
 
-socket.on('connect', () => {
-    console.log(`You connected with ID: ${socket.id}`);
-
-    socket.on('receive-board-click', ({boardItem, clientNum, active}) => {
-        boardItem = $('#' + boardItem);
-
-        if (active === true) {
-            boardItem.addClass(`done-${clientNum}`);
-            return;
-        }
-
-        boardItem.removeClass(`done-${clientNum}`);
-    })
-});
+onConnect(socket);
 
 function init() {
     url = new URL(location.href);
@@ -62,10 +49,13 @@ function init() {
     // share
     $('.copy-link-btn').on('click', copyShareURL);
 
-    //race
-    console.log(searchParams.toString());
+    // race
     $('.create-room-btn').on('click', () => createRoom(socket, searchParams));
     $('.join-room-btn').on('click', () => joinRoom(socket, searchParams));
+    $('.ready-btn').on('click', () => handleReadyBtn(socket));
+
+    // misc
+    // window.addEventListener("beforeunload", (e) => beforeClose(e, socket));
 
     // debug
     $('.show-stats-btn').on('click', showBoardStats);
