@@ -157,22 +157,23 @@
         </div>
 
         <div class="offcanvas-body">
-            <p>Join a room:</p>
-            <div class="justify-start align-center">
-                <input type="text" id="join-room-name" placeholder="Room Name">
-                <button type="button" class="join-room-btn text-icon-btn outlined-btn justify-start align-center">
-                    <span>Join</span>
-                    <span class="material-symbols-outlined">meeting_room</span>
-                </button>
-            </div>
-            <br />
-    
             <p>Create a room:</p>
             <div class="justify-start align-center">
-                <input type="text" id="create-room-name" placeholder="Room Name">
+                <input type="text" id="create-room-name" placeholder="Room Name" minlength="1" maxlength="25" autocomplete="off">
                 <button type="button" class="create-room-btn text-icon-btn outlined-btn justify-start align-center">
                     <span>Create</span>
                     <span class="material-symbols-outlined">add</span>
+                </button>
+            </div>
+
+            <br/>
+            
+            <p>Join a room:</p>
+            <div class="justify-start align-center">
+                <input type="text" id="join-room-name" placeholder="Room Name" minlength="1" maxlength="25" autocomplete="off">
+                <button type="button" class="join-room-btn text-icon-btn outlined-btn justify-start align-center">
+                    <span>Join</span>
+                    <span class="material-symbols-outlined">meeting_room</span>
                 </button>
             </div>
         </div>

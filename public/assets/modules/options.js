@@ -70,31 +70,25 @@ function resetOptions() {
 
 
 function setBoardSize(val) {
-    boardSize = val;
+    boardSize = Math.floor(Number(val));
 }
 
 function setDifficulty(val) {
-    diffMultiplier = val;
+    diffMultiplier = parseFloat(val).toFixed(1);
 }
 
 
 function setBoardSizeValue(val) {
-    if (val && val.type !== 'input') {
-        setBoardSize(val);
-        $('#board-size-range').val(boardSize);
-    }
-    else setBoardSize($('#board-size-range').val());
+    setBoardSize(val);
+    $('#board-size-range').val(boardSize);
     const text = boardSize + 'x' + boardSize;
     $('.board-size').text(text);
 }
 
 
 function setDifficultyValue(val) {
-    if (val && val.type !== 'input') {
-        setDifficulty(val);
-        $('#difficulty-range').val(diffMultiplier);
-    }
-    else setDifficulty( parseFloat($('#difficulty-range').val()).toFixed(1) );
+    setDifficulty(val);
+    $('#difficulty-range').val(val);
     $('.difficulty').text(diffMultiplier);
 }
 

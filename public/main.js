@@ -30,6 +30,9 @@ function init() {
 
     rand = new SeededRandom(seed);
     $('#seed-input').val(seed);
+
+    setBoardSizeValue(searchParams.get('boardSize') ?? defaultBoardSize);
+    setDifficultyValue(searchParams.get('difficulty') ?? defaultDiffMultiplier)
     updateShareURL();
     
     setColorMode(getColorMode());
@@ -41,8 +44,8 @@ function init() {
     $('.options-form').on('submit', handleOptionsFormSubmit);
     $('.reroll-btn').on('click', () => handleRandomSeedBtn());
     $('.random-seed-btn').on('click', () => handleRandomSeedBtn(false));
-    $('#board-size-range').on('input', setBoardSizeValue);
-    $('#difficulty-range').on('input', setDifficultyValue);
+    $('#board-size-range').on('input', () => setBoardSizeValue($('#board-size-range').val()));
+    $('#difficulty-range').on('input', () => setDifficultyValue($('#difficulty-range').val()));
     $('.build-btn').on('click', handleOptionsFormSubmit);
     $('.reset-btn').on('click', resetOptions);
 
