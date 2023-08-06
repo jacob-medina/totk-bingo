@@ -157,8 +157,8 @@
         </div>
 
         <div class="offcanvas-body">
-            <p>Create a room:</p>
-            <div class="justify-start align-center">
+            <p class="mb-2">Create a room:</p>
+            <div class="justify-start align-center gap-3">
                 <input type="text" id="create-room-name" placeholder="Room Name" minlength="1" maxlength="25" autocomplete="off">
                 <button type="button" class="create-room-btn text-icon-btn outlined-btn justify-start align-center">
                     <span>Create</span>
@@ -167,9 +167,10 @@
             </div>
 
             <br/>
+            <br/>
             
-            <p>Join a room:</p>
-            <div class="justify-start align-center">
+            <p class="mb-2">Join a room:</p>
+            <div class="justify-start align-center gap-3">
                 <input type="text" id="join-room-name" placeholder="Room Name" minlength="1" maxlength="25" autocomplete="off">
                 <button type="button" class="join-room-btn text-icon-btn outlined-btn justify-start align-center">
                     <span>Join</span>
@@ -184,6 +185,11 @@
             <div class="bingo-board"></div>
 
             <div class="race-menu hide">
+                <hgroup class="mb-5">
+                    <h2 class="mb-2 text-center">Waiting Room</h2>
+                    <h3 id="room-name-title" class="text-center"></h3>
+                </hgroup>
+
                 <div class="vs-container flex-column justify-center align-center">
                     <div class="players"></div>
 
@@ -191,6 +197,12 @@
                     <button class="ready-btn text-icon-btn outlined-btn justify-start align-center mt-5">
                         <span>Ready?</span>
                         <span class="material-symbols-outlined">done</span>
+                    </button>
+
+                    <!-- Exit room button -->
+                    <button class="exit-room-btn text-icon-btn justify-start align-center mt-5">
+                        <span>Exit Room</span>
+                        <span class="material-symbols-outlined">logout</span>
                     </button>
                 </div>
             </div>

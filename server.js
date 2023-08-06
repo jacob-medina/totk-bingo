@@ -89,18 +89,17 @@ io.on('connection', socket => {
             return;
         }
 
-        let clientNum;
-        const unconnectedClient = room.clients.find(client => !client.connected);
+        // let clientNum;
+        // let unconnectedClient = room.clients.find(client => !client.connected);
 
-        if (unconnectedClient) {
-            unconnectedClient = new Client(socket.id, unconnectedClient.num);
-            clientNum = unconnectedClient.num;
-        }
+        // if (unconnectedClient) {
+        //     unconnectedClient = new Client(socket.id, unconnectedClient.num);
+        //     clientNum = unconnectedClient.num;
+        // }
 
-        else {
-            room.clients.push(new Client(socket.id, room.clients.length + 1));
-            clientNum = room.clients.length;
-        }
+        // else {
+        room.clients.push(new Client(socket.id, room.clients.length + 1));
+        let clientNum = room.clients.length;
         
         socket.join(roomName);
 
@@ -149,11 +148,15 @@ io.on('connection', socket => {
             if (roomName === socket.id) continue;  // pass over default room
 
             const room = getRoom(roomName);
-            const client = room.clients.find(c => c.id === socket.id);
+            const clientIndex = room.clients.findIndex(c => c.id === socket.id);
+            const client = room.clients[clientIndex];
 
             client.connected = false;
+            room.clients.splice(clientIndex, 1);
+            
             socket.to(roomName).emit('client-left-room', {
-                id: socket.id
+                id: socket.id,
+                clientNum: client.num
             });
         }
         console.log(`Client ${socket.id} disconnected.`);

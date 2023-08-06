@@ -1,6 +1,7 @@
 import { fetchAndGenerateBoard } from "./board.js";
 import { SeededRandom } from "./SeededRandom.js";
 import { updateShareURL } from "./share.js";
+import { hideElement } from "./helper.js";
 
 let clientNum = 1;
 let room = null;
@@ -10,10 +11,12 @@ function onConnect(socket) {
         console.log(`You connected with ID: ${socket.id}`);
     
         socket.on('client-joined-room', clientNum => {
+            $('.ready-btn').prop('disabled', false);
             generatePlayerMenu(clientNum);
         });
 
-        socket.on('client-left-room', ({ id }) => {
+        socket.on('client-left-room', ({ id, clientNum }) => {
+            $(`.player-${clientNum}`).remove();
             console.warn(`Client ${id} left the room!`);
         });
 
@@ -60,10 +63,15 @@ function createRoom(socket, urlSearchParams) {
 
         room = roomName;
         clientNum = 1;
+
+        $('#room-name-title').text(room);
+        $('.ready-btn').prop('disabled', true);
+        clearUI();
         generatePlayerMenu(clientNum);
         generateRaceMenu();
     });
 }
+
 
 function joinRoom(socket, urlSearchParams) {
     const roomName = $('#join-room-name').val();
@@ -77,6 +85,7 @@ function joinRoom(socket, urlSearchParams) {
 
         room = roomName;
         clientNum = 2;
+        $('#room-name-title').text(room);
 
         socket.emit('request-ready-status', roomName, (clients) => {
             for (const client of clients) {
@@ -90,12 +99,32 @@ function joinRoom(socket, urlSearchParams) {
         const seed = urlSearchParams.get("seed");
         const rand = new SeededRandom(seed);
 
+        clearUI();
         $('#seed-input').val(seed);
         updateShareURL();
         fetchAndGenerateBoard(urlSearchParams, rand);
         generateRaceMenu();
     });
 }
+
+
+function leaveRoom() {
+    location.reload();
+}
+
+
+function clearUI() {
+    // hide menu buttons
+    hideElement('.reroll-btn');
+    hideElement('button[data-bs-target="#options-sidebar"]');
+    hideElement('button[data-bs-target="#share-sidebar"]');
+    hideElement('button[data-bs-target="#race-sidebar"]');
+    
+    // close sidebar
+    const raceSidebar = bootstrap.Offcanvas.getInstance('#race-sidebar');
+    raceSidebar.hide();
+}
+
 
 function generatePlayerMenu(clientNum, ready=false) {
     const readyIcon = ready ? 'check_circle' : 'radio_button_unchecked';
@@ -133,4 +162,4 @@ function beginRace() {
     $('.bingo-board').removeClass('hide');
 }
 
-export { onConnect, createRoom, joinRoom, room, clientNum, handleReadyBtn, generatePlayerMenu };
+export { onConnect, createRoom, joinRoom, room, clientNum, handleReadyBtn, generatePlayerMenu, leaveRoom };

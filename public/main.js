@@ -7,7 +7,7 @@ import { updateShareURL, copyShareURL } from "./assets/modules/share.js";
 import { fetchAndGenerateBoard } from "./assets/modules/board.js";
 
 import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
-import { createRoom, joinRoom, room, clientNum, handleReadyBtn, generatePlayerMenu, onConnect } from './assets/modules/race.js';
+import { createRoom, joinRoom, room, clientNum, handleReadyBtn, generatePlayerMenu, onConnect, leaveRoom } from './assets/modules/race.js';
 
 let rand;
 let url;
@@ -56,6 +56,7 @@ function init() {
     $('.create-room-btn').on('click', () => createRoom(socket, searchParams));
     $('.join-room-btn').on('click', () => joinRoom(socket, searchParams));
     $('.ready-btn').on('click', () => handleReadyBtn(socket));
+    $('.exit-room-btn').on('click', leaveRoom);
 
     // misc
     // window.addEventListener("beforeunload", (e) => beforeClose(e, socket));

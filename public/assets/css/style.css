@@ -226,8 +226,13 @@ input[type="text"]:is(:focus, :hover) ::placeholder {
     padding: 0.5rem;
 }
 
-.text-icon-btn:hover,
-.icon-btn:hover,
+.text-icon-btn[disabled],
+.icon-btn[disabled] {
+    opacity: 60%;
+}
+
+.text-icon-btn:hover:not([disabled]),
+.icon-btn:hover:not([disabled]),
 div:has( > input[type="checkbox"]:hover) label  {
     color: var(--highlight);
     border-color: var(--highlight);
@@ -537,6 +542,9 @@ footer {
 
 
 /* RACE */
+.race-menu :is(h2, h3) {
+    font-family: "Hylia Serif";
+}
 
 .player-container {
     gap: 2rem;
