@@ -53,13 +53,14 @@ function init() {
     $('.copy-link-btn').on('click', copyShareURL);
 
     // race
-    $('.create-room-btn').on('click', () => createRoom(socket, searchParams));
+    $('.create-room-options').on('submit', (e) => createRoom(e, socket, searchParams))
+    // $('.create-room-btn').on('click', () => createRoom(socket, searchParams));
     $('.join-room-btn').on('click', () => joinRoom(socket, searchParams));
+    document.getElementById('race-sidebar').addEventListener('hidden.bs.offcanvas', e => {
+        $('#race-sidebar .error').addClass('hide');
+    });
     $('.ready-btn').on('click', () => handleReadyBtn(socket));
     $('.exit-room-btn').on('click', leaveRoom);
-
-    // misc
-    // window.addEventListener("beforeunload", (e) => beforeClose(e, socket));
 
     // debug
     $('.show-stats-btn').on('click', showBoardStats);

@@ -1,7 +1,8 @@
 import { fetchAndGenerateBoard } from "./board.js";
 import { SeededRandom } from "./SeededRandom.js";
 import { updateShareURL } from "./share.js";
-import { hideElement } from "./helper.js";
+import { hideElement, showElement } from "./helper.js";
+import { titleCase } from "./formatName.js";
 
 let clientNum = 1;
 let room = null;
@@ -11,13 +12,22 @@ function onConnect(socket) {
         console.log(`You connected with ID: ${socket.id}`);
     
         socket.on('client-joined-room', clientNum => {
-            $('.ready-btn').prop('disabled', false);
-            generatePlayerMenu(clientNum);
+            // $('.ready-btn').prop('disabled', false);
+            generateReadyStatus(socket);
         });
 
         socket.on('client-left-room', ({ id, clientNum }) => {
             $(`.player-${clientNum}`).remove();
-            console.warn(`Client ${id} left the room!`);
+
+            // if host leaves, exit room
+            if (clientNum === 1) {
+                leaveRoom();
+                return;
+            }
+
+            // $('.ready-btn').prop('disabled', false);
+            generateReadyStatus(socket);
+            // console.warn(`Client ${id} left the room!`);
         });
 
         socket.on('ready', (clientNum, allReady) => {
@@ -29,11 +39,11 @@ function onConnect(socket) {
             }
 
             else {
-                generatePlayerMenu(clientNum, true);
+                generateReadyStatus(socket);
             }
 
             if (allReady) beginRace();
-        })
+        });
     
         socket.on('receive-board-click', ({boardItem, clientNum, active}) => {
             boardItem = $('#' + boardItem);
@@ -48,7 +58,9 @@ function onConnect(socket) {
     });
 }
 
-function createRoom(socket, urlSearchParams) {
+function createRoom(event, socket, urlSearchParams) {
+    event.preventDefault();
+
     const roomName = $('#create-room-name').val();
     socket.emit('create-room', {
         room: roomName,
@@ -57,17 +69,23 @@ function createRoom(socket, urlSearchParams) {
 
     socket.on('create-room-response', ({res, error}) => {
         if (error) {
-            console.warn(error);
+            const errorEl = $('.create-room-options .error');
+            errorEl.text(error);
+            showElement(errorEl);
+            // console.warn(error);
             return;
         }
 
-        room = roomName;
+        room = roomName.toLowerCase();
         clientNum = 1;
 
-        $('#room-name-title').text(room);
-        $('.ready-btn').prop('disabled', true);
+        $('#room-name-title').text(titleCase(room));
+        // $('.ready-btn').prop('disabled', true);
         clearUI();
-        generatePlayerMenu(clientNum);
+        generatePlayerMenu([{
+            clientNum: clientNum,
+            ready: false
+        }]);
         generateRaceMenu();
     });
 }
@@ -79,19 +97,20 @@ function joinRoom(socket, urlSearchParams) {
 
     socket.on('join-room-response', ({res, error}) => {
         if (error) {
-            console.warn(error);
+            const errorEl = $('.join-room-options .error');
+            errorEl.text(error);
+            showElement(errorEl);
+            // console.warn(error);
             return;
         }
 
         room = roomName;
         clientNum = 2;
-        $('#room-name-title').text(room);
+        $('#room-name-title').text(titleCase(room));
 
-        socket.emit('request-ready-status', roomName, (clients) => {
-            for (const client of clients) {
-                generatePlayerMenu(client.clientNum, client.ready);
-            }
-        });
+        socket.emit('request-ready-status', roomName, (clients) =>
+            generatePlayerMenu(clients)
+        );
 
         console.log(res.message);
         
@@ -105,6 +124,12 @@ function joinRoom(socket, urlSearchParams) {
         fetchAndGenerateBoard(urlSearchParams, rand);
         generateRaceMenu();
     });
+}
+
+function generateReadyStatus(socket) {
+    socket.emit('request-ready-status', room, (clients) =>
+        generatePlayerMenu(clients)
+    );
 }
 
 
@@ -126,18 +151,24 @@ function clearUI() {
 }
 
 
-function generatePlayerMenu(clientNum, ready=false) {
-    const readyIcon = ready ? 'check_circle' : 'radio_button_unchecked';
+function generatePlayerMenu(clients) {
+    $('.players').text('');  // clear players
 
-    $('.players').append(
-`<div class="player-container player-${clientNum} justify-center align-center">
-    <div class="justify-center align-center">
-        <span class="material-symbols-outlined">person</span>
-        <p>Player ${clientNum}</p>
-    </div>
-    <span class="ready-icon material-symbols-outlined" data-ready="${ready}">${readyIcon}</span>
-</div>`
-    )
+    for (const { clientNum, ready } of clients) {
+        const readyIcon = ready ? 'check_circle' : 'radio_button_unchecked';
+        const host = (clientNum === 1) ? '<span>(host)</span>' : '<span style="visibility: hidden">(host)</span>';
+    
+        $('.players').append(
+            `<div class="player-container player-${clientNum} justify-center align-center">
+                <div class="justify-center align-center">
+                    <span class="material-symbols-outlined">person</span>
+                    <p>Player ${clientNum}</p>
+                    ${host}
+                </div>
+                <span class="ready-icon material-symbols-outlined" data-ready="${ready}">${readyIcon}</span>
+            </div>`
+        )
+    }
 }
 
 function generateRaceMenu() {

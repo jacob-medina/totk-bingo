@@ -49,9 +49,18 @@ io.on('connection', socket => {
 
     // Create room
     socket.on('create-room', ({room, params}) => {
+        room = room.toLowerCase();
+
+        if (room.length < 1) {
+            socket.emit('create-room-response', {
+                error: 'Room name must be at least 1 character long!'
+            });
+            return;
+        }
+
         if (getRoom(room)) {
             socket.emit('create-room-response', {
-                error: `Room name ${room} already in use!`
+                error: 'Room name already in use! Choose a different name.'
             });
             return;
         }
@@ -61,30 +70,33 @@ io.on('connection', socket => {
             params: params,
             clients: [new Client(socket.id, 1)]
         });
-        console.info(`Room "${room}" created by ${socket.id}`);
-
         socket.join(room);
 
         socket.emit('create-room-response', {
             res: `Created room ${room}`
         });
+
+        console.info(`Room "${room}" created by ${socket.id}`);
+
     });
 
 
     // Join room
     socket.on('join-room', (roomName) => {
+        roomName = roomName.toLowerCase();
+        
         const room = getRoom(roomName);
 
         if (room == null) {
             socket.emit('join-room-response', {
-                error: `Could not find room: ${roomName}`
+                error: 'Could not find room!'
             });
             return;
         }
 
         if (getAmountClients(room) >= 2) {
             socket.emit('join-room-response', {
-                error: `Room already filled with ${getAmountClients(room)} clients!`
+                error: 'Room is full!'
             });
             return;
         }
@@ -119,16 +131,21 @@ io.on('connection', socket => {
     socket.on('ready', (roomName, id) => {
         const room = getRoom(roomName);
         const client = room.clients.find(c => c.id === id);
+        if (client == null) return;
 
         client.ready = true;
 
-        const allReady = getAmountReadyClients(room) >= getAmountClients(room);
+        const allReady = (getAmountReadyClients(room) >= getAmountClients(room)) && (getAmountClients(room) > 1);
 
         io.in(roomName).emit('ready', client.num, allReady);
     });
 
     socket.on('request-ready-status', (roomName, cb) => {
         const room = getRoom(roomName);
+        if (room == null) {
+            cb([]);
+            return;
+        }
 
         const clients = [];
 
@@ -153,7 +170,7 @@ io.on('connection', socket => {
 
             client.connected = false;
             room.clients.splice(clientIndex, 1);
-            
+
             socket.to(roomName).emit('client-left-room', {
                 id: socket.id,
                 clientNum: client.num

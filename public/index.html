@@ -65,7 +65,7 @@
                 <h5 class="options-header">Seed</h5>
                 <div class="options-section">
                     <div class="justify-start align-center">
-                        <input type="text" placeholder="Enter a seed" name="seed" id="seed-input" autocomplete="off" />
+                        <input type="text" placeholder="Enter a seed" name="seed" id="seed-input" autocomplete="off" minlength="1" maxlength="25" />
                         
                         <!-- <button type="submit" class="icon-btn">
                             <span class="material-symbols-outlined">arrow_circle_right</span>
@@ -157,25 +157,30 @@
         </div>
 
         <div class="offcanvas-body">
-            <p class="mb-2">Create a room:</p>
-            <div class="justify-start align-center gap-3">
-                <input type="text" id="create-room-name" placeholder="Room Name" minlength="1" maxlength="25" autocomplete="off">
-                <button type="button" class="create-room-btn text-icon-btn outlined-btn justify-start align-center">
-                    <span>Create</span>
-                    <span class="material-symbols-outlined">add</span>
-                </button>
-            </div>
+            <form class="create-room-options">
+                <p class="mb-2">Create a room:</p>
+                <div class="justify-start align-center gap-3">
+                    <input type="text" id="create-room-name" placeholder="Room Name" minlength="1" maxlength="25" autocomplete="off">
+                    <button type="submit" class="create-room-btn text-icon-btn outlined-btn justify-start align-center">
+                        <span>Create</span>
+                        <span class="material-symbols-outlined">add</span>
+                    </button>
+                </div>
+                <small class="error hide">Room name taken!</small>
+            </form>
 
             <br/>
             <br/>
-            
-            <p class="mb-2">Join a room:</p>
-            <div class="justify-start align-center gap-3">
-                <input type="text" id="join-room-name" placeholder="Room Name" minlength="1" maxlength="25" autocomplete="off">
-                <button type="button" class="join-room-btn text-icon-btn outlined-btn justify-start align-center">
-                    <span>Join</span>
-                    <span class="material-symbols-outlined">meeting_room</span>
-                </button>
+            <div class="join-room-options">
+                <p class="mb-2">Join a room:</p>
+                <div class="justify-start align-center gap-3">
+                    <input type="text" id="join-room-name" placeholder="Room Name" minlength="1" maxlength="25" autocomplete="off">
+                    <button type="button" class="join-room-btn text-icon-btn outlined-btn justify-start align-center">
+                        <span>Join</span>
+                        <span class="material-symbols-outlined">meeting_room</span>
+                    </button>
+                </div>
+                <small class="error hide">Room name does not exist!</small>
             </div>
         </div>
     </div>
