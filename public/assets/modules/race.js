@@ -9,7 +9,7 @@ let room = null;
 
 function onConnect(socket) {
     socket.on('connect', () => {
-        console.log(`You connected with ID: ${socket.id}`);
+        // console.log(`You connected with ID: ${socket.id}`);
     
         socket.on('client-joined-room', clientNum => {
             // $('.ready-btn').prop('disabled', false);
@@ -91,7 +91,9 @@ function createRoom(event, socket, urlSearchParams) {
 }
 
 
-function joinRoom(socket, urlSearchParams) {
+function joinRoom(event, socket, urlSearchParams) {
+    event.preventDefault();
+    
     const roomName = $('#join-room-name').val();
     socket.emit('join-room', roomName);
 
@@ -112,7 +114,7 @@ function joinRoom(socket, urlSearchParams) {
             generatePlayerMenu(clients)
         );
 
-        console.log(res.message);
+        // console.log(res.message);
         
         urlSearchParams = new URLSearchParams(res.params);
         const seed = urlSearchParams.get("seed");

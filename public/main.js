@@ -1,7 +1,7 @@
 import { SeededRandom, getRandSeed } from "./assets/modules/SeededRandom.js";
 import { challengeTypes } from "./assets/modules/ChallengeType.js";
 
-import { handleRandomSeedBtn, newBoard, handleOptionsFormSubmit, setBoardSizeValue, setDifficultyValue, generateChallengeOptions, boardSize, defaultBoardSize, diffMultiplier, defaultDiffMultiplier, resetOptions } from "./assets/modules/options.js";
+import { handleRandomSeedBtn, newBoard, handleOptionsFormSubmit, getExcludeArray, setBoardSizeValue, setDifficultyValue, setExclude, generateChallengeOptions, boardSize, defaultBoardSize, diffMultiplier, defaultDiffMultiplier, resetOptions } from "./assets/modules/options.js";
 import { hideElement, showElement } from "./assets/modules/helper.js";
 import { updateShareURL, copyShareURL } from "./assets/modules/share.js";
 import { fetchAndGenerateBoard } from "./assets/modules/board.js";
@@ -32,7 +32,9 @@ function init() {
     $('#seed-input').val(seed);
 
     setBoardSizeValue(searchParams.get('boardSize') ?? defaultBoardSize);
-    setDifficultyValue(searchParams.get('difficulty') ?? defaultDiffMultiplier)
+    setDifficultyValue(searchParams.get('difficulty') ?? defaultDiffMultiplier);
+    setExclude(getExcludeArray(searchParams, true));
+
     updateShareURL();
     
     setColorMode(getColorMode());
@@ -53,9 +55,10 @@ function init() {
     $('.copy-link-btn').on('click', copyShareURL);
 
     // race
-    $('.create-room-options').on('submit', (e) => createRoom(e, socket, searchParams))
+    $('.create-room-options').on('submit', (e) => createRoom(e, socket, searchParams));
+    $('.join-room-options').on('submit', (e) => joinRoom(e, socket, searchParams))
     // $('.create-room-btn').on('click', () => createRoom(socket, searchParams));
-    $('.join-room-btn').on('click', () => joinRoom(socket, searchParams));
+    // $('.join-room-btn').on('click', () => joinRoom(socket, searchParams));
     document.getElementById('race-sidebar').addEventListener('hidden.bs.offcanvas', e => {
         $('#race-sidebar .error').addClass('hide');
     });

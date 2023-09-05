@@ -157,8 +157,8 @@
         </div>
 
         <div class="offcanvas-body">
-            <form class="create-room-options">
-                <p class="mb-2">Create a room:</p>
+            <h5 class="options-header">Create a Room</h5>
+            <form class="create-room-options options-section">
                 <div class="justify-start align-center gap-3">
                     <input type="text" id="create-room-name" placeholder="Room Name" minlength="1" maxlength="25" autocomplete="off">
                     <button type="submit" class="create-room-btn text-icon-btn outlined-btn justify-start align-center">
@@ -167,21 +167,34 @@
                     </button>
                 </div>
                 <small class="error hide">Room name taken!</small>
+
+                <br/>
+                
+                <p class="mb-0">Board parameters:</p>
+                <ul class="board-params mt-2">
+                    <li>Board Size: <span class="board-size">5x5</span></li>
+                    <li>Difficulty: <span class="difficulty">1.0</span></li>
+                    <li class="exclude-items-container">
+                        <span>Exclude...</span>
+                        <ul class="exclude-items">
+                            <li>Main Quests</li>
+                            <li>Korok Seeds</li>
+                        </ul>
+                    </li>
+                </ul>
             </form>
 
-            <br/>
-            <br/>
-            <div class="join-room-options">
-                <p class="mb-2">Join a room:</p>
+            <h5 class="options-header">Join a Room</h5>
+            <form class="join-room-options options-section">
                 <div class="justify-start align-center gap-3">
                     <input type="text" id="join-room-name" placeholder="Room Name" minlength="1" maxlength="25" autocomplete="off">
-                    <button type="button" class="join-room-btn text-icon-btn outlined-btn justify-start align-center">
+                    <button type="submit" class="join-room-btn text-icon-btn outlined-btn justify-start align-center">
                         <span>Join</span>
                         <span class="material-symbols-outlined">meeting_room</span>
                     </button>
                 </div>
                 <small class="error hide">Room name does not exist!</small>
-            </div>
+            </form>
         </div>
     </div>
     
@@ -203,6 +216,8 @@
                         <span>Ready?</span>
                         <span class="material-symbols-outlined">done</span>
                     </button>
+
+                    <p id="wait">Wait for others to be ready.</p>
 
                     <!-- Exit room button -->
                     <button class="exit-room-btn text-icon-btn justify-start align-center mt-5">
