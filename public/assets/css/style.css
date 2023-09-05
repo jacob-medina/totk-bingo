@@ -29,8 +29,11 @@
     --bg-highlight-light: rgba(255,255,255,0.15);
     --bg-highlight-dark: rgba(223, 209, 186, 0.241);
 
-    --green-dark: rgba(42, 138, 92, 0.5);
-    --green-light: rgba(35, 205, 123, 0.3);
+    --green-dark: #39a372;
+    --green-light: #23cd7b;
+
+    --orange-dark: #a6691f;
+    --orange-light: #d9901a;
 
     --bg-img-dark: url("../images/background-dark.png") repeat;
     --bg-img-light: url("../images/background-light.png") repeat center/70%;
@@ -92,6 +95,7 @@ body {
     --highlight: var(--highlight-light);
     --bg-highlight: var(--bg-highlight-light);
     --green: var(--green-dark);
+    --orange: var(--orange-dark);
     --bg-img: var(--bg-img-dark);
     
     background: var(--bg-img);
@@ -106,6 +110,7 @@ body[data-color-mode="light"] {
     --highlight: var(--highlight-dark);
     --bg-highlight: var(--bg-highlight-dark);
     --green: var(--green-light);
+    --orange: var(--orange-light);
     --bg-img: var(--bg-img-light);
 }
 
@@ -221,8 +226,13 @@ input[type="text"]:is(:focus, :hover) ::placeholder {
     padding: 0.5rem;
 }
 
-.text-icon-btn:hover,
-.icon-btn:hover,
+.text-icon-btn[disabled],
+.icon-btn[disabled] {
+    opacity: 60%;
+}
+
+.text-icon-btn:hover:not([disabled]),
+.icon-btn:hover:not([disabled]),
 div:has( > input[type="checkbox"]:hover) label  {
     color: var(--highlight);
     border-color: var(--highlight);
@@ -435,14 +445,34 @@ h1 {
     color: var(--highlight);
 }
 
-.board-item:hover:not(.done) {
+.board-item:hover:not(:is(.done-1, .done-2)) {
     background-color: var(--bg-highlight);
 }
 
-.done,
-.board-item:active:not(.done) {
-    background-color: var(--green);
+:is(.done-1, .done-2) {
     backdrop-filter: blur(3px);
+    position: relative;
+    isolation: isolate;
+}
+
+:is(.done-1, .done-2)::before {
+    content: "";
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    z-index: -1;
+    opacity: 80%;
+}
+
+.done-1::before {
+/* .board-item:active:not(.done) { */
+    background-color: var(--green);
+}
+
+.done-2::before {
+    background-color: var(--orange);
 }
 
 .board-item p {
@@ -522,6 +552,47 @@ footer {
     transition: transform 0.5s;
 }
 
+
+/* RACE */
+.race-menu :is(h2, h3) {
+    font-family: "Hylia Serif";
+}
+
+.player-container {
+    gap: 2rem;
+}
+
+.player-container .material-symbols-outlined {
+    font-size: 3rem;
+}
+
+.player-container p {
+    margin: 0;
+
+    font-family: "Hylia Serif";
+    font-size: 2rem;
+}
+
+.player-container .ready-icon {
+    font-size: 2rem;
+}
+
+/* .player-container .ready-icon[data-ready=true] {
+    color: var(--green);
+} */
+
+.player-1 {
+    color: var(--green);
+}
+
+.player-2 {
+    color: var(--orange);
+}
+
+.player-container .ready-icon {
+    color: var(--text-color);
+    /* opacity: 80%; */
+}
 
 /* MEDIA QUERIES */
 

@@ -8,6 +8,7 @@ const defaultDiffMultiplier = 1.0;
 
 let boardSize = defaultBoardSize;
 let diffMultiplier = defaultDiffMultiplier;
+let excludeItems = [];
 
 
 function handleRandomSeedBtn(reload=true) {
@@ -70,32 +71,53 @@ function resetOptions() {
 
 
 function setBoardSize(val) {
-    boardSize = val;
+    boardSize = Math.floor(Number(val));
 }
 
 function setDifficulty(val) {
-    diffMultiplier = val;
+    diffMultiplier = parseFloat(val).toFixed(1);
 }
 
 
 function setBoardSizeValue(val) {
-    if (val && val.type !== 'input') {
-        setBoardSize(val);
-        $('#board-size-range').val(boardSize);
-    }
-    else setBoardSize($('#board-size-range').val());
+    setBoardSize(val);
+    $('#board-size-range').val(boardSize);
     const text = boardSize + 'x' + boardSize;
     $('.board-size').text(text);
 }
 
 
 function setDifficultyValue(val) {
-    if (val && val.type !== 'input') {
-        setDifficulty(val);
-        $('#difficulty-range').val(diffMultiplier);
-    }
-    else setDifficulty( parseFloat($('#difficulty-range').val()).toFixed(1) );
+    setDifficulty(val);
+    $('#difficulty-range').val(val);
     $('.difficulty').text(diffMultiplier);
+}
+
+function getExcludeArray(searchParams, spaces=false) {
+    const exclude = searchParams.get("exclude");
+    let excludeTypes = [];
+    if (exclude) {
+        excludeTypes = exclude.split(',');
+        if (spaces) excludeTypes = excludeTypes.map(item => item.split('-').join(' '));
+    }
+    return excludeTypes;
+}
+
+
+function setExclude(items) {
+    excludeItems = items;
+    const excludeUl = $('.exclude-items');
+    excludeUl.text('');
+
+    if (items.length === 0) {
+        $('.exclude-items-container').text('Include all challenge types');
+        return;
+    }
+
+    items.forEach(item => {
+        item = titleCase(item);
+        excludeUl.append(`<li>${item}</li>`);
+    });
 }
 
 
@@ -121,4 +143,4 @@ function generateChallengeOptions() {
     optionsContainer.append(html);
 }
 
-export { boardSize, diffMultiplier, defaultBoardSize, defaultDiffMultiplier, newBoard, handleRandomSeedBtn, handleOptionsFormSubmit, resetOptions, setBoardSize, setDifficulty, setBoardSizeValue, setDifficultyValue, generateChallengeOptions };
+export { boardSize, diffMultiplier, getExcludeArray, defaultBoardSize, defaultDiffMultiplier, newBoard, handleRandomSeedBtn, handleOptionsFormSubmit, resetOptions, setBoardSize, setDifficulty, setBoardSizeValue, setDifficultyValue, setExclude, generateChallengeOptions };

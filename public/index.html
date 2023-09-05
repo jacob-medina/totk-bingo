@@ -38,6 +38,11 @@
                 <span class="material-symbols-outlined">share</span>
             </button>
 
+            <button class="text-icon-btn justify-start align-center" data-bs-toggle="offcanvas" data-bs-target="#race-sidebar" aria-controls="race-sidebar">
+                <span>Race</span>
+                <span class="material-symbols-outlined">sports_score</span>
+            </button>
+
             <button class="color-mode-toggle icon-btn">
                 <span class="material-symbols-outlined">light_mode</span>
             </button>
@@ -60,7 +65,7 @@
                 <h5 class="options-header">Seed</h5>
                 <div class="options-section">
                     <div class="justify-start align-center">
-                        <input type="text" placeholder="Enter a seed" name="seed" id="seed-input" autocomplete="off" />
+                        <input type="text" placeholder="Enter a seed" name="seed" id="seed-input" autocomplete="off" minlength="1" maxlength="25" />
                         
                         <!-- <button type="submit" class="icon-btn">
                             <span class="material-symbols-outlined">arrow_circle_right</span>
@@ -141,10 +146,86 @@
             </div>
         </div>
     </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="race-sidebar" aria-labelledby="race-label">
+
+        <div class="offcanvas-header">
+            <h4 class="offcanvas-title" id="race-label">Race</h4>
+            <button type="button" class="icon-btn" data-bs-dismiss="offcanvas" aria-label="Close">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <div class="offcanvas-body">
+            <h5 class="options-header">Create a Room</h5>
+            <form class="create-room-options options-section">
+                <div class="justify-start align-center gap-3">
+                    <input type="text" id="create-room-name" placeholder="Room Name" minlength="1" maxlength="25" autocomplete="off">
+                    <button type="submit" class="create-room-btn text-icon-btn outlined-btn justify-start align-center">
+                        <span>Create</span>
+                        <span class="material-symbols-outlined">add</span>
+                    </button>
+                </div>
+                <small class="error hide">Room name taken!</small>
+
+                <br/>
+                
+                <p class="mb-0">Board parameters:</p>
+                <ul class="board-params mt-2">
+                    <li>Board Size: <span class="board-size">5x5</span></li>
+                    <li>Difficulty: <span class="difficulty">1.0</span></li>
+                    <li class="exclude-items-container">
+                        <span>Exclude...</span>
+                        <ul class="exclude-items">
+                            <li>Main Quests</li>
+                            <li>Korok Seeds</li>
+                        </ul>
+                    </li>
+                </ul>
+            </form>
+
+            <h5 class="options-header">Join a Room</h5>
+            <form class="join-room-options options-section">
+                <div class="justify-start align-center gap-3">
+                    <input type="text" id="join-room-name" placeholder="Room Name" minlength="1" maxlength="25" autocomplete="off">
+                    <button type="submit" class="join-room-btn text-icon-btn outlined-btn justify-start align-center">
+                        <span>Join</span>
+                        <span class="material-symbols-outlined">meeting_room</span>
+                    </button>
+                </div>
+                <small class="error hide">Room name does not exist!</small>
+            </form>
+        </div>
+    </div>
     
     <main class="hide">
         <div class="wrapper justify-center align-center">
             <div class="bingo-board"></div>
+
+            <div class="race-menu hide">
+                <hgroup class="mb-5">
+                    <h2 class="mb-2 text-center">Waiting Room</h2>
+                    <h3 id="room-name-title" class="text-center"></h3>
+                </hgroup>
+
+                <div class="vs-container flex-column justify-center align-center">
+                    <div class="players"></div>
+
+                    <!-- Ready button -->
+                    <button class="ready-btn text-icon-btn outlined-btn justify-start align-center mt-5">
+                        <span>Ready?</span>
+                        <span class="material-symbols-outlined">done</span>
+                    </button>
+
+                    <p id="wait">Wait for others to be ready.</p>
+
+                    <!-- Exit room button -->
+                    <button class="exit-room-btn text-icon-btn justify-start align-center mt-5">
+                        <span>Exit Room</span>
+                        <span class="material-symbols-outlined">logout</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </main>
 
