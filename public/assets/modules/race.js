@@ -193,6 +193,14 @@ function handleReadyBtn(socket) {
 function beginRace() {
     $('.race-menu').addClass('hide');
     $('.bingo-board').removeClass('hide');
+
+    const color = `<span class="player-${clientNum}" style="font-family: 'Hylia Serif';">${clientNum === 1 ? 'Green' : 'Orange'}</span>`;
+    // <span class="material-symbols-outlined">person</span>
+    $(
+    `<div class="justify-center align-center mt-4">
+        <span>You are&nbsp;</span>
+        ${color}
+    </div>`).insertAfter('.bingo-board');
 }
 
 export { onConnect, createRoom, joinRoom, room, clientNum, handleReadyBtn, generatePlayerMenu, leaveRoom };

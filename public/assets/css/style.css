@@ -314,6 +314,14 @@ div:has( > #share-url) {
 
 /* MAIN CONTENT */
 
+.title-rel {
+    position: relative;
+}
+
+.title-rel-loaded {
+    right: calc(40vw - 10px);
+}
+
 .title-container {
     position: absolute;
     top: 35vh;
@@ -486,7 +494,7 @@ h1 {
 }
 
 .item-text {
-    font-size: 90%;
+    font-size: 70%;
     line-height: 1.1rem;
     /* font-weight: bold; */
 }
@@ -596,6 +604,16 @@ footer {
 
 /* MEDIA QUERIES */
 
-/* @media screen and (min-width: 680px) {
-    
-} */
+@media screen and (min-width: 650px) {
+
+    .item-text {
+        font-size: 90%;
+    }
+}
+
+@media screen and (min-width: 1025px) {
+
+    .title-rel-loaded {
+        right: 0;
+    }
+}
