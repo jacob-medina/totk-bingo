@@ -177,6 +177,7 @@ function getChallenge({category, id, name, edible, amount, challengeType}) {
 function endLoading() {
     $('.title-container').css('animation-name', 'loading-end');
     $('.title').attr('data-loading', 'false');
+    $('.title-rel').addClass('title-rel-loaded');
     
     showElement('main');
     showElement('footer');
