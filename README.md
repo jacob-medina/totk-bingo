@@ -1,8 +1,17 @@
 # ![logo](./readme-assets/ouroboros-logo-small.png) Tears of the Kingdom Bingo
 
-## Description
-
 [Click here to visit the website.](https://totkbingo-728f1f6f6e8d.herokuapp.com/)
+
+
+## Contents
+1. [Description](#description)
+2. [How to Play](#how-to-play)
+3. [Racing](#want-to-race-a-friend)
+4. [Sharing](#can-i-share-my-board)
+4. [Options](#options)
+
+
+## Description
 
 A bingo board of randomly generated challenges for The Legend of Zelda: Tears of the Kingdom.
 
@@ -17,17 +26,33 @@ Your goal is to **complete at least 1 line of challenges on the board** (row, co
 1. Start on a new save file or after completing the Great Sky Island
 ![Game Starting Position](./readme-assets/game-starting-position.png)
 
-2. Once you've completed any of the challenges on the board, click it to mark it as compelete
+2. Once you've completed any of the challenges in Tears of the Kingdom, click it on the board to mark it as compelete
 
 ![Checking off challenges](./readme-assets/check-off-challenges.png)
 
+
 ### Want to race a friend?
+
+Click the **Race** button, then type in the name of the room you want to **create**.
+
+![Creating room](./readme-assets/creating-room.png)
+
+Have your friend **join** your room with the name you created. Then, **both players must click the Ready button to begin**.
+
+![Waiting room](./readme-assets/waiting-room.png)
+
+Then, play as normal and see who can complete the most challenges!
+
+![Race Preview](./readme-assets/race-preview.png)
+
+
+### Can I share my board?
 
 Set up your board and click the **Share** button to send a link to the board.
 
 ![Share Preview](./readme-assets/share-preview.png)
 
-> Note: *currently, separate bingo boards do not sync between each other*
+> _Note: shared boards only copy board settings_
 
 
 ## Options
