@@ -540,22 +540,22 @@ footer {
     padding: 1.5rem;
 }
 
-.random-seed-btn:has(#reroll) {
+.reroll-btn {
     transform: scale(1);
     transition: transform 0.2s;
 }
 
-.random-seed-btn:has(#reroll):hover {
+.reroll-btn:hover {
     transform: scale(1.1);
     transition: transform 0.2s;
 }
 
-.random-seed-btn #reroll {
+.reroll-btn #reroll {
     transform: rotate(0deg);
     transition: transform 0.5s;
 }
 
-.random-seed-btn:hover #reroll {
+.reroll-btn:hover #reroll {
     transform: rotate(180deg);
     transition: transform 0.5s;
 }
